@@ -31,7 +31,7 @@ public class Import implements IImport {
             if(defaultVersion.equalsIgnoreCase("no")){
                 DefaultVersion.defaultVersion(connection,Variables.FILE_TABLE,inputStream,newFile);
             }else if(defaultVersion.equalsIgnoreCase("yes")) {
-                //overwrite
+                OverwriteVersion.overwriteFile(connection,inputStream, newFile);
             }
         }
         System.out.println("Successfully added");
