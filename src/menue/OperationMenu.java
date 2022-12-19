@@ -1,6 +1,6 @@
-package application;
+package menue;
 
-public class Menu {
+public class OperationMenu {
     public static void readerMenu(){
         System.out.println("-----menu-----");
         System.out.println("0.Log out");
@@ -11,9 +11,10 @@ public class Menu {
         System.out.println("2.Import a file");
         System.out.println("3.Rollback");
         System.out.println("4.Export a file");
+        System.out.println("5.create Classification");
     }
     public static void adminMenu(){
         staffMenu();
-        System.out.println("5.Delete a file");
+        System.out.println("6.Delete a file");
     }
 }
