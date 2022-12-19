@@ -1,6 +1,8 @@
 package application;
 
 import factory.Factory;
+//import menu.OperationMenu;
+import menue.OperationMenu;
 import operations.operation.IOperation;
 import signup.Signup;
 import users.UserTypes;
@@ -42,16 +44,19 @@ public class Main {
         IOperation functionality = Factory.createUserFunctionality(UserTypes.Admin);
 
         do{
-        //login
-        Menu.adminMenu();
+            //login
+            OperationMenu.adminMenu();
 
-        System.out.print("choose Operation number: ");
-        userMenuChoice = sc.nextInt();
-        System.out.println("----------------------");
+            System.out.print("choose Operation number: ");
+            userMenuChoice = sc.nextInt();
+            System.out.println("----------------------");
             switch (userMenuChoice){
                 case 0:
                     sqlDatabase.closeDB(connection);
                     displayMenu =false;
+                    break;
+                case 1:
+                    functionality.readFiles(connection);
                     break;
                 case 2:
                     System.out.print("Enter file path: ");
@@ -59,12 +64,15 @@ public class Main {
                     functionality.importFiles(connection,filePath);
                     break;
                 case 3:
-                    System.out.print("Enter name.type: ");
-                    String fileNameAndType = sc.next();
-                    functionality.rollBack(connection,fileNameAndType);
+                    System.out.print("Enter file.type: ");
+                    String fileAndType = sc.next();
+                    functionality.rollBack(connection,fileAndType);
                     break;
                 case 5:
                     functionality.createClassification(connection);
+                    break;
+                case 6:
+                    functionality.deleteFiles(connection);
                     break;
                 default:
                     //exception
@@ -72,6 +80,6 @@ public class Main {
                     break;
             }
 
-    }while (displayMenu);
+        }while (displayMenu);
     }
 }

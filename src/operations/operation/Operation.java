@@ -39,9 +39,9 @@ public class Operation implements IOperation {
     public void deleteFiles(Connection connection) throws SQLException {
         delete.delete(connection);
     }
-//    public void readFiles(Connection connection) throws SQLException {
-//        read.read(connection);
-//    }
+    public void readFiles(Connection connection) throws SQLException {
+        read.read(connection);
+    }
 
     public void exportFile(){
 
