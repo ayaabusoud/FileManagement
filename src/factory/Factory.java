@@ -1,5 +1,6 @@
 package factory;
 
+import operations.createClassification.CreateClassification;
 import operations.delete.Delete;
 import operations.export.Export;
 import operations.importOperation.Import;
@@ -20,6 +21,7 @@ public class Factory {
             obj.setExport(new Export());
             obj.setRollback(new Rollback());
             obj.setRead(new Read());
+            obj.setClassification(new CreateClassification());
         }
         if (type.equals(UserTypes.Staff)){
         obj = new Operation();
@@ -27,6 +29,7 @@ public class Factory {
         obj.setExport(new Export());
         obj.setRollback(new Rollback());
         obj.setRead(new Read());
+        obj.setClassification(new CreateClassification());
         }
         if(type.equals(UserTypes.Reader)){
             obj.setRead(new Read());

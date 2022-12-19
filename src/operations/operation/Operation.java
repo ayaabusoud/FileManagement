@@ -1,5 +1,6 @@
 package operations.operation;
 
+import operations.createClassification.ICreateClassification;
 import operations.delete.IDelete;
 import operations.export.IExport;
 import operations.importOperation.IImport;
@@ -18,12 +19,17 @@ public class Operation implements IOperation {
     private IRollback rollback;
     private IRead read;
 
+
+
+    private ICreateClassification classification;
+
     public Operation(){
         this.delete = null;
         this.export = null;
         this.importFile = null;
         this.rollback = null;
         this.read = null;
+        this.classification = null;
     }
 
     public void importFiles(Connection connection,String path) throws SQLException, IOException {
@@ -31,17 +37,20 @@ public class Operation implements IOperation {
 
     }
     public void deleteFiles(Connection connection) throws SQLException {
-    delete.delete(connection);
+        delete.delete(connection);
     }
+//    public void readFiles(Connection connection) throws SQLException {
+//        read.read(connection);
+//    }
 
     public void exportFile(){
 
     }
     public void rollBack(Connection connection,String path) throws SQLException, IOException {
-    rollback.rollbackVersion(connection,path);
+        rollback.rollbackVersion(connection,path);
     }
-    public void createClassification(){
-
+    public void createClassification(Connection connection) throws SQLException {
+        classification.create(connection);
     }
 
     public IDelete getDelete() {
@@ -85,6 +94,11 @@ public class Operation implements IOperation {
         this.read = read;
     }
 
+    public ICreateClassification getClassification() {
+        return classification;
+    }
 
-
+    public void setClassification(ICreateClassification classification) {
+        this.classification = classification;
+    }
 }

@@ -10,7 +10,8 @@ public interface IOperation {
     public void importFiles(Connection connection, String path) throws SQLException, IOException;
     public void deleteFiles(Connection connection) throws SQLException;
 
+//    public void readFiles(Connection connection) throws SQLException;
     public void exportFile();
     public void rollBack(Connection connection,String path) throws SQLException, IOException;
-    public void createClassification();
+    public void createClassification(Connection connection) throws SQLException;
 }
