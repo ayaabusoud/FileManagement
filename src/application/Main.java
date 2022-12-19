@@ -63,6 +63,9 @@ public class Main {
                     String fileNameAndType = sc.next();
                     functionality.rollBack(connection,fileNameAndType);
                     break;
+                case 5:
+                    functionality.createClassification(connection);
+                    break;
                 default:
                     //exception
                     System.out.println("Not Implemented yet");
