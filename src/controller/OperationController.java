@@ -2,6 +2,7 @@ package controller;
 
 import readDB.ReadFile;
 import variables.Variables;
+import writeDB.DeleteFiles;
 //import writeDB.DeleteFiles;
 
 import java.sql.Connection;
@@ -12,6 +13,12 @@ public class OperationController {
         if (operationType.equalsIgnoreCase(Variables.READ_FILES)){
             try {
                 ReadFile.readFiles(connection,fileAttribute);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }  else if (operationType.equalsIgnoreCase(Variables.DELETE_FILES)) {
+            try {
+                DeleteFiles.deleteFiles(connection,fileAttribute);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

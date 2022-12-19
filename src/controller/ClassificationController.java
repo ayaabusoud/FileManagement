@@ -2,6 +2,7 @@ package controller;
 
 import readDB.ReadFilesByClassification;
 import variables.Variables;
+import writeDB.DeleteFilesByClassification;
 //import writeDB.DeleteFilesByClassification;
 
 import java.sql.Connection;
@@ -12,6 +13,12 @@ public class ClassificationController {
         if (operationType.equalsIgnoreCase(Variables.READ_FILES)){
             try {
                 ReadFilesByClassification.readFiles(connection,fileAttribute);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (operationType.equalsIgnoreCase(Variables.DELETE_FILES)) {
+            try {
+                DeleteFilesByClassification.deleteFiles(connection,fileAttribute);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

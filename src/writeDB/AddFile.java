@@ -16,7 +16,7 @@ public class AddFile {
         PreparedStatement preparedStmt = connection.prepareStatement(query);
         preparedStmt.setString (1,  EncryptionFile.encryption(newFile.getName()));
         preparedStmt.setString (2, newFile.getType());
-        preparedStmt.setInt(3, inputStream.available());
+        preparedStmt.setInt(3, inputStream.available()); // Calculate size
         preparedStmt.setBlob(4,inputStream);
         preparedStmt.setInt(5, newFile.getVersion());
         preparedStmt.setInt(6, newFile.getLastVersion());
