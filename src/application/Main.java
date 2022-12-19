@@ -2,6 +2,7 @@ package application;
 
 import factory.Factory;
 import operations.operation.IOperation;
+import signup.Signup;
 import users.UserTypes;
 import database.IDatabase;
 import database.SqlDatabase;
@@ -19,6 +20,23 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         boolean displayMenu = true;
         int userMenuChoice;
+
+        System.out.println("Welcome to our File Management Application");
+        System.out.println("1.Signup");
+        System.out.println("2.Login");
+        System.out.print("choose Operation number: ");
+        int authChoice = sc.nextInt();
+        switch (authChoice){
+            case 1:
+                Signup.signupUser(connection);
+                break;
+            case 2:
+//                login
+                break;
+            default:
+//                invalid
+                break;
+        }
 
         //login
         IOperation functionality = Factory.createUserFunctionality(UserTypes.Admin);
