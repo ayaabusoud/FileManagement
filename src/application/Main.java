@@ -3,10 +3,6 @@ package application;
 import factory.Factory;
 import operations.operation.IOperation;
 import users.UserTypes;
-import writeDB.AddClassification;
-import classification.aya.CreateClassification;
-import readDB.DisplayClassifications;
-import classification.aya.ReadByClass;
 import database.IDatabase;
 import database.SqlDatabase;
 
@@ -45,6 +41,9 @@ public class Main {
                     functionality.importFiles(connection,filePath);
                     break;
                 case 3:
+                    System.out.print("Enter name.type: ");
+                    String fileNameAndType = sc.next();
+                    functionality.rollBack(connection,fileNameAndType);
                     break;
                 default:
                     //exception

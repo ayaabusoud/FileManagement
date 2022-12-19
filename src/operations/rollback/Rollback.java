@@ -5,6 +5,7 @@ import file.FileNameAndType;
 import readDB.CheckFileExistences;
 import readDB.GetBackupInfo;
 import readDB.GetFileInfo;
+import variables.Variables;
 import writeDB.AddFile;
 import writeDB.DeleteBackup;
 import writeDB.DeleteLastVersion;
@@ -15,8 +16,22 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class Rollback implements IRollback {
-
-    public void rollbackVersion(Connection connection, String path) throws SQLException, IOException {
-
+        public void rollbackVersion(Connection connection, String fileNameAndType) throws SQLException, IOException {
+            FileInfo file = GetFileInfo.getInfo(connection, FileNameAndType.splitNameAndType(fileNameAndType));
+            if (file.getVersionType() == Variables.ONE_VERSION_TYPE) {
+                DeleteLastVersion.deleteFile(connection, file);
+            } else if (file.getVersionType() == Variables.DEFAULT_VERSION_CONTROL_TYPE) {
+                DeleteLastVersion.deleteFile(connection, file);
+                UpdateLastVersion.updateToOne(connection, Variables.FILE_TABLE, file);
+            } else if (file.getVersionType() == Variables.OVERWRITE_VERSION_CONTROL_TYPE) {
+                FileInfo backupFile = GetBackupInfo.getInfo(connection, file);
+                DeleteBackup.deleteFile(connection, backupFile);
+                DeleteLastVersion.deleteFile(connection, file);
+                if (CheckFileExistences.previousVersionIsExist(connection, backupFile)) {
+                    backupFile.setVersionType(Variables.DEFAULT_VERSION_CONTROL_TYPE);
+                }
+                backupFile.setLastVersion(1);
+                AddFile.addNewFile(connection, Variables.FILE_TABLE, backupFile);
+            }
+        }
     }
-}
