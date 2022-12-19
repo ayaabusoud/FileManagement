@@ -29,7 +29,7 @@ public class Import implements IImport {
             System.out.print("Do you want to disable the default version? (yes/no) ");
             String defaultVersion = sc.next();
             if(defaultVersion.equalsIgnoreCase("no")){
-                //default
+                DefaultVersion.defaultVersion(connection,Variables.FILE_TABLE,inputStream,newFile);
             }else if(defaultVersion.equalsIgnoreCase("yes")) {
                 //overwrite
             }
