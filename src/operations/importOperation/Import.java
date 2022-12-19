@@ -23,7 +23,6 @@ public class Import implements IImport {
 
         if (!CheckFileExistences.isExist(connection, Variables.FILE_TABLE, newFile)) {
             AddFile.addNewFile(connection,Variables.FILE_TABLE,inputStream, newFile);
-
         }
         else {
             System.out.print("Do you want to disable the default version? (yes/no) ");
