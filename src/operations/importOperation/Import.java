@@ -25,13 +25,18 @@ public class Import implements IImport {
             AddFile.addNewFile(connection,Variables.FILE_TABLE,inputStream, newFile);
         }
         else {
-            System.out.print("Do you want to disable the default version? (yes/no) ");
-            String defaultVersion = sc.next();
-            if(defaultVersion.equalsIgnoreCase("no")){
-                DefaultVersion.defaultVersion(connection,Variables.FILE_TABLE,inputStream,newFile);
-            }else if(defaultVersion.equalsIgnoreCase("yes")) {
-                OverwriteVersion.overwriteFile(connection,inputStream, newFile);
+            if(Variables.AdminUser)
+            {
+                System.out.print("Do you want to disable the default version? (yes/no) ");
+                String defaultVersion = sc.next();
+                if(defaultVersion.equalsIgnoreCase("no")){
+                    DefaultVersion.defaultVersion(connection,Variables.FILE_TABLE,inputStream,newFile);
+                }else if(defaultVersion.equalsIgnoreCase("yes")) {
+                    OverwriteVersion.overwriteFile(connection,inputStream, newFile);
+                }
             }
+            else
+                DefaultVersion.defaultVersion(connection,Variables.FILE_TABLE,inputStream,newFile);
         }
         System.out.println("Successfully added");
     }
