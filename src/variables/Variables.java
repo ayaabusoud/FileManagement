@@ -16,4 +16,7 @@ public class Variables {
     public static final String FILE_NAME = "name" ;
     public static final String  FILE_TYPE = "type" ;
     public static final String  FILE_SIZE = "size" ;
+    public static final int AdminKey = 111;
+    public static final int StaffKey = 123;
+    public static boolean AdminUser = false;
 }
