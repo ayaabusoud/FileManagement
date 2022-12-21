@@ -25,6 +25,7 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
         boolean displayMenu = true;
+        boolean displayOperationMenu = true;
         int userMenuChoice;
         IOperation functionality = null;
         int authChoice = 100;
@@ -73,7 +74,7 @@ public class Main {
             switch (userMenuChoice){
                 case 0:
                     sqlDatabase.closeDB(connection);
-                    displayMenu =false;
+                    displayOperationMenu =false;
                     break;
                 case 1:
                     functionality.readFiles(connection);
@@ -106,6 +107,6 @@ public class Main {
             }
 
 
-        }while (displayMenu);
+        }while (displayOperationMenu);
     }
 }

@@ -20,7 +20,7 @@ public class GetFileInfo {
             file.setType(result.getString("type"));
             file.setContext(result.getBlob("context"));
             file.setVersion(result.getInt("version"));
-            file.setSize(result.getInt("size"));
+            file.setSize(result.getString("size"));
             file.setVersionType(result.getInt("versionType"));
         }
         return file;
