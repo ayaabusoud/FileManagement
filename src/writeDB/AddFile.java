@@ -13,10 +13,16 @@ public class AddFile {
     public static void addNewFile(Connection connection,String tableName, InputStream inputStream, FileInfo newFile) throws SQLException, IOException {
         String query = "INSERT INTO " + tableName + " (name,type,size,context,version,lastVersion,versionType) values (?,?,?,?,?,?,?)";
 
+        String Size = null ;
+        if(inputStream.available() < 50){
+            Size = "S" ;
+        } else  if (inputStream.available() >= 50 && inputStream.available() <= 70 ){
+            Size = "M" ;
+        } else Size = "L" ;
         PreparedStatement preparedStmt = connection.prepareStatement(query);
         preparedStmt.setString (1,  EncryptionFile.encryption(newFile.getName()));
         preparedStmt.setString (2, newFile.getType());
-        preparedStmt.setInt(3, inputStream.available()); // Calculate size
+        preparedStmt.setString(3, Size);
         preparedStmt.setBlob(4,inputStream);
         preparedStmt.setInt(5, newFile.getVersion());
         preparedStmt.setInt(6, newFile.getLastVersion());
