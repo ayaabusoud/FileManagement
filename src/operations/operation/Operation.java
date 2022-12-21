@@ -7,7 +7,6 @@ import operations.importOperation.IImport;
 import operations.read.IRead;
 import operations.rollback.IRollback;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -19,9 +18,9 @@ public class Operation implements IOperation {
     private IRollback rollback;
     private IRead read;
 
-
-
     private ICreateClassification classification;
+    private Connection connection;
+    private String nameOfFile;
 
     public Operation(){
         this.delete = null;
@@ -51,6 +50,15 @@ public class Operation implements IOperation {
     }
     public void createClassification(Connection connection) throws SQLException {
         classification.create(connection);
+    }
+
+    @Override
+    public void exportFile(Connection connection , String nameOfFile) {
+        try {
+            export.export(connection , nameOfFile);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public IDelete getDelete() {
@@ -101,4 +109,11 @@ public class Operation implements IOperation {
     public void setClassification(ICreateClassification classification) {
         this.classification = classification;
     }
+
+
+
+
+
+    
+
 }
