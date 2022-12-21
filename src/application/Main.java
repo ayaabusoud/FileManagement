@@ -2,9 +2,12 @@ package application;
 
 import database.IDatabase;
 import database.SqlDatabase;
+import exceptions.NotInteger;
+import exceptions.NotIntegerException;
 import login.Login;
 import menue.OperationMenu;
 import operations.operation.IOperation;
+import org.omg.CORBA.TIMEOUT;
 import signup.Signup;
 import variables.Variables;
 
@@ -17,7 +20,6 @@ import java.util.Scanner;
 
 public class Main {
 
-
     public static void main(String[] args) throws Exception {
         IDatabase sqlDatabase = SqlDatabase.createInstance();
         Connection connection = sqlDatabase.connectDB();
@@ -25,16 +27,25 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
         boolean displayMenu = true;
+        boolean displayOperationMenu = true;
         int userMenuChoice;
         IOperation functionality = null;
-        int authChoice = 100;
+        int authChoice = 0;
 
         System.out.println("Welcome to our File Management Application");
         do {
+
+            try {
             System.out.println("1.Signup");
             System.out.println("2.Login");
             System.out.print("choose Operation number: ");
-            authChoice = sc.nextInt();
+               authChoice = NotInteger.scanInteger(authChoice);
+            }catch (NotIntegerException e) {
+            System.err.println(e.getMessage());
+            Thread.sleep(100);
+                continue;
+            }
+
 
             switch (authChoice){
 
@@ -67,13 +78,20 @@ public class Main {
                 OperationMenu.readerMenu();
             }
 
-            System.out.print("choose Operation number: ");
-            userMenuChoice = sc.nextInt();
+            try {
+                System.out.print("choose Operation number: ");
+                userMenuChoice = NotInteger.scanInteger(authChoice);
+            }catch (NotIntegerException e) {
+                System.err.println(e.getMessage());
+                Thread.sleep(100);
+                continue;
+            }
+
             System.out.println("----------------------");
             switch (userMenuChoice){
                 case 0:
                     sqlDatabase.closeDB(connection);
-                    displayMenu =false;
+                    displayOperationMenu =false;
                     break;
                 case 1:
                     functionality.readFiles(connection);
@@ -106,6 +124,6 @@ public class Main {
             }
 
 
-        }while (displayMenu);
+        }while (displayOperationMenu);
     }
 }

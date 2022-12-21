@@ -8,7 +8,7 @@ public class FileInfo {
     private int version;
     private int lastVersion;
     private int versionType;
-    private int size;
+    private String size;
 
     public FileInfo(){
         this.name=null;
@@ -17,7 +17,7 @@ public class FileInfo {
         this.lastVersion=1;
         this.version=1;
         this.versionType=0;
-        this.size=0;
+        this.size=null;
     }
 
     public String getName() {
@@ -68,11 +68,11 @@ public class FileInfo {
         this.versionType = versionType;
     }
 
-    public int getSize() {
+    public String getSize() {
         return size;
     }
 
-    public void setSize(int size) {
+    public void setSize(String size) {
         this.size = size;
     }
 }
