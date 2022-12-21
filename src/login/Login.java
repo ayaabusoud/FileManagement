@@ -1,92 +1,76 @@
 package login;
 
-
+import factory.Factory;
 import menue.OperationMenu;
-import org.mindrot.jbcrypt.BCrypt;
-import readDB.CheckUsernameExistences;
+import operations.operation.IOperation;
+import readDB.GetUserPassword;
 import signup.Signup;
-import variables.Variables;
+import users.UserTypes;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+import static login.CheckPassword.checkPass;
 import static variables.Variables.*;
 
 public class Login {
-    private final static String QUERY = "SELECT password FROM user WHERE name = ?";
-    private static boolean checkPass(String password, String hashedPassword) {
-        return BCrypt.checkpw(password, hashedPassword);
-    }
-    public static int loginUser(Connection connection) throws SQLException, IOException {
-        String username="";
-        String password="";
+
+    private static final int AdminKey = 111;
+    private static final int StaffKey = 123;
+    public static IOperation loginUser(Connection connection) throws SQLException {
+        IOperation userAccess = null;
         int key;
         Scanner sc = new Scanner(System.in);
-        boolean usernameIsValid = false;
-        boolean passwordIsValid = true;
-        int accountType;
         OperationMenu.loginMenu();
-        accountType = sc.nextInt();
-        switch (accountType)
-        {
+        int userType = sc.nextInt();
+        switch (userType){
             case 1:
-                System.out.println("enter your key, please.");
-                key = sc.nextInt();
-                while (key != AdminKey)
-                {
-                    System.out.println("The key you entered is incorrect, re-enter.");
-                }
+                CheckLoginKey.checkKey(AdminKey);
                 AdminUser = true;
-                return accountType;
+                userAccess = Factory.createUserFunctionality(UserTypes.Admin);
+                break;
             case 2:
-                System.out.println("enter your key, please.");
-                key = sc.nextInt();
-                while (key != StaffKey)
-                {
-                    System.out.println("The key you entered is incorrect, re-enter.");
-                    key = sc.nextInt();
-                }
-                return accountType;
+                CheckLoginKey.checkKey(StaffKey);
+                StaffUser = true;
+                userAccess = Factory.createUserFunctionality(UserTypes.Staff);
+                break;
             case 3:
-                while (!usernameIsValid){
+                boolean notValid = true;
+                do {
                     System.out.print("Enter username: ");
-                    username = sc.next();
-                    if(CheckUsernameExistences.isExists(connection,username)){
-                        usernameIsValid = true;
-                    }else {
-                        System.out.println("The username is not exists, please enter the correct name ");
-                    }
-                }
-                while (passwordIsValid)
-                {
+                    String username = sc.next();
                     System.out.print("Enter you password: ");
-                    password = sc.next();
-
-                    PreparedStatement preparedStmt = connection.prepareStatement(QUERY);
-                    preparedStmt.setString (1, username);
-                    ResultSet result = preparedStmt.executeQuery();
-                    String hashedPassword = result.getString("password");
-                    passwordIsValid= checkPass(password,hashedPassword);
-
-                    if (passwordIsValid)
-                        System.out.println("The password matches.");
-                    else
-                        System.out.println("The password does not match. Enter the password again");
-                }
-                return accountType;
+                    String password = sc.next();
+                    String hashedPassword = GetUserPassword.getPassword(connection,username);
+                    boolean passwordIsValid = checkPass(password, hashedPassword);
+                    if (passwordIsValid) {
+                        userAccess = Factory.createUserFunctionality(UserTypes.Reader);
+                        readerUser = true;
+                        notValid =false;
+                    }else {
+                        System.out.println("Invalid name or password, try again..");
+                    }
+                }while (notValid);
+                break;
             case 4:
-                Signup.signupUser(connection);
+                try {
+                    Signup.signupUser(connection);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                readerUser = true;
                 break;
             default:
-                System.out.println("Error, re-enter");
+                System.out.println("invalid number, please re-enter");
         }
-        if(username == null || password == null){
-            //throw exception
-        }
-        return accountType;
+        return userAccess;
     }
+
+
+
+
 }
