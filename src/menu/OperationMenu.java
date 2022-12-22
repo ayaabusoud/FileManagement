@@ -1,4 +1,4 @@
-package menue;
+package menu;
 
 public class OperationMenu {
     public static void readerMenu(){
@@ -17,19 +17,6 @@ public class OperationMenu {
         staffMenu();
         System.out.println("6.Delete a file");
     }
-    public static void loginMenu()
-    {
-        System.out.println("choose your account type:");
-        System.out.println("1.Admin");
-        System.out.println("2.Staff");
-        System.out.println("3.Reader");
-        System.out.println("4.Create a new account");
-    }
 
-    public static void MainMenu() {
-        System.out.println("Welcome to our File Management Application");
-        System.out.println("choose Operation number: ");
-        System.out.println("1.Sig1nup");
-        System.out.println("2.Login");
-    }
+
 }

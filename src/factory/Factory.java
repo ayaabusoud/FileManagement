@@ -11,9 +11,8 @@ import users.UserTypes;
 
 public class Factory {
     public static Operation createUserFunctionality(UserTypes type){
-        Operation obj = null;
+        Operation obj = new Operation();
         if (type.equals(UserTypes.Admin)){
-            obj = new Operation();
             obj.setImportFile(new Import());
             obj.setDelete(new Delete());
             obj.setExport(new Export());
@@ -22,7 +21,6 @@ public class Factory {
             obj.setClassification(new CreateClassification());
         }
         if (type.equals(UserTypes.Staff)){
-        obj = new Operation();
         obj.setImportFile(new Import());
         obj.setExport(new Export());
         obj.setRollback(new Rollback());
@@ -30,7 +28,6 @@ public class Factory {
         obj.setClassification(new CreateClassification());
         }
         else{
-            obj = new Operation();
             obj.setRead(new Read());
         }
         return obj;

@@ -1,5 +1,6 @@
-package menue;
-//import readDB.DisplayClassifications;
+package menu;
+
+import readDB.DisplayClassifications;
 
 public class ClassificationMenu {
     public static void classificationMenu(){

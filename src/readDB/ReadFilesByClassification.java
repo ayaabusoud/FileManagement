@@ -28,7 +28,7 @@ public class ReadFilesByClassification {
         PreparedStatement preparedStmt = connection.prepareStatement(query);
         preparedStmt.setString (1,  EncryptionFile.encryption(context[0]));
         preparedStmt.setString (2,  context[1]);
-        preparedStmt.setInt (3,  0);
+        preparedStmt.setString (3,  context[2]);
         ResultSet result = preparedStmt.executeQuery();
         while (result.next()){
             System.out.println(DecryptionFile.decryption(result.getString("name"))+"."+result.getString("type")+": ");

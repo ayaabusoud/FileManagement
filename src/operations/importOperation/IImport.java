@@ -6,6 +6,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public interface IImport {
-    public void importFile(Connection connection, String path) throws SQLException, IOException;
+    public void importFile(Connection connection) throws SQLException, IOException, InterruptedException;
 
 }
