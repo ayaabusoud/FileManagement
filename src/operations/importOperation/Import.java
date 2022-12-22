@@ -1,5 +1,6 @@
 package operations.importOperation;
 
+import exceptions.IncorrectFilePathException;
 import file.FileInfo;
 import file.FileNameAndType;
 import readDB.CheckFileExistences;
@@ -16,41 +17,48 @@ import java.util.Scanner;
 public class Import implements IImport {
 
     @Override
-    public void importFile(Connection connection) throws SQLException, IOException, InterruptedException {
+    public void importFile(Connection connection) throws IncorrectFilePathException {
         Scanner sc = new Scanner(System.in);
         boolean filePathLoop = true;
         String filePath ="";
         InputStream inputStream = null;
-        while (filePathLoop){
-            filePathLoop =false;
+
             try {
                 System.out.print("Enter file path: ");
                 filePath = sc.next();
                 inputStream = new FileInputStream(filePath);
-            }catch (FileNotFoundException e){
-                System.err.println(e.getMessage());
-                filePathLoop =true;
                 Thread.sleep(100);
+            }catch (FileNotFoundException e) {
+                throw new IncorrectFilePathException("The file path is incorrect");
             }
-        }
+            catch (InterruptedException ex) {
+                throw new RuntimeException(ex);
+            }
+
         FileInfo newFile = FileNameAndType.splitNameAndType(filePath);
 
-        if (!CheckFileExistences.isExist(connection, Variables.FILE_TABLE, newFile)) {
-            AddFile.addNewFile(connection,Variables.FILE_TABLE,inputStream, newFile);
-        }
-        else {
-            if(Variables.AdminUser)
-            {
-                System.out.print("Do you want to disable the default version? (yes/no) ");
-                String defaultVersion = sc.next();
-                if(defaultVersion.equalsIgnoreCase("no")){
-                    DefaultVersion.defaultVersion(connection,Variables.FILE_TABLE,inputStream,newFile);
-                }else if(defaultVersion.equalsIgnoreCase("yes")) {
-                    OverwriteVersion.overwriteFile(connection,inputStream, newFile);
-                }
+        try {
+            if (!CheckFileExistences.isExist(connection, Variables.FILE_TABLE, newFile)) {
+                AddFile.addNewFile(connection,Variables.FILE_TABLE,inputStream, newFile);
             }
-            else
-                DefaultVersion.defaultVersion(connection,Variables.FILE_TABLE,inputStream,newFile);
+            else {
+                if(Variables.AdminUser)
+                {
+                    System.out.print("Do you want to disable the default version? (yes/no) ");
+                    String defaultVersion = sc.next();
+                    if(defaultVersion.equalsIgnoreCase("no")){
+                        DefaultVersion.defaultVersion(connection,Variables.FILE_TABLE,inputStream,newFile);
+                    }else if(defaultVersion.equalsIgnoreCase("yes")) {
+                        OverwriteVersion.overwriteFile(connection,inputStream, newFile);
+                    }
+                }
+                else
+                    DefaultVersion.defaultVersion(connection,Variables.FILE_TABLE,inputStream,newFile);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
         System.out.println("Successfully added");
     }

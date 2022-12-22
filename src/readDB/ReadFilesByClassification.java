@@ -11,17 +11,17 @@ import java.sql.SQLException;
 
 public class ReadFilesByClassification {
     public static void readFiles(Connection connection, String[]context) throws SQLException {
-        String nameQuery = " = ";
-        String typeQuery  =" = ";
-        String sizeQuery =" = ";
+        String nameQuery = Variables.EQUALS;
+        String typeQuery  =Variables.EQUALS;
+        String sizeQuery =Variables.EQUALS;
         if(context[0].equals(Variables.noCondition)){
-            nameQuery = " != ";
+            nameQuery = Variables.NOT_EQUALS;
         }
         if(context[1].equals(Variables.noCondition)){
-            typeQuery = " != ";
+            typeQuery = Variables.NOT_EQUALS;
         }
         if(context[2].equals(Variables.noCondition)){
-            sizeQuery = " != ";
+            sizeQuery = Variables.NOT_EQUALS;
         }
 
         String query ="SELECT * FROM file WHERE name"+nameQuery+"? AND type"+typeQuery+"? AND size"+sizeQuery+"?"+" AND lastVersion = 1";
@@ -30,6 +30,9 @@ public class ReadFilesByClassification {
         preparedStmt.setString (2,  context[1]);
         preparedStmt.setString (3,  context[2]);
         ResultSet result = preparedStmt.executeQuery();
+        if (!result.next()){
+            System.out.println("There is no such files in the system.");
+        }
         while (result.next()){
             System.out.println(DecryptionFile.decryption(result.getString("name"))+"."+result.getString("type")+": ");
             System.out.println(result.getString("context"));

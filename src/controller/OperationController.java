@@ -10,19 +10,15 @@ import java.sql.SQLException;
 
 public class OperationController {
     public static void control(Connection connection,String[] fileAttribute, String operationType){
+        try {
         if (operationType.equalsIgnoreCase(Variables.READ_FILES)){
-            try {
                 ReadFile.readFiles(connection,fileAttribute);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }  else if (operationType.equalsIgnoreCase(Variables.DELETE_FILES)) {
-            try {
-                DeleteFiles.deleteFiles(connection,fileAttribute);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
 
+        }  else if (operationType.equalsIgnoreCase(Variables.DELETE_FILES)) {
+                DeleteFiles.deleteFiles(connection,fileAttribute);
+        }
+    } catch (SQLException e) {
+        throw new RuntimeException(e);
+    }
     }
 }

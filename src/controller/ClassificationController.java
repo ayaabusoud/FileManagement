@@ -10,19 +10,19 @@ import java.sql.SQLException;
 
 public class ClassificationController {
     public static void control(Connection connection,String[] fileAttribute, String operationType){
-        if (operationType.equalsIgnoreCase(Variables.READ_FILES)){
-            try {
-                ReadFilesByClassification.readFiles(connection,fileAttribute);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        } else if (operationType.equalsIgnoreCase(Variables.DELETE_FILES)) {
-            try {
-                DeleteFilesByClassification.deleteFiles(connection,fileAttribute);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
+        try {
 
+
+        if (operationType.equalsIgnoreCase(Variables.READ_FILES)){
+                ReadFilesByClassification.readFiles(connection,fileAttribute);
+
+        } else if (operationType.equalsIgnoreCase(Variables.DELETE_FILES)) {
+
+                DeleteFilesByClassification.deleteFiles(connection,fileAttribute);
+
+        }
+    } catch (SQLException e) {
+        throw new RuntimeException(e);
+    }
     }
 }

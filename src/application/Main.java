@@ -2,19 +2,20 @@ package application;
 
 import database.IDatabase;
 import database.SqlDatabase;
+import exceptions.NotAllowedOperationException;
 import exceptions.NotInteger;
 import exceptions.NotIntegerException;
+import exceptions.connectionMySqlException;
+import factory.Factory;
 import login.Login;
-import menue.OperationMenu;
+import menu.AuthenticationMenu;
+import menu.OperationMenu;
 import operations.operation.IOperation;
-import org.omg.CORBA.TIMEOUT;
 import signup.Signup;
+import users.UserTypes;
 import variables.Variables;
 
-import java.io.IOException;
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 
@@ -22,9 +23,7 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         IDatabase sqlDatabase = SqlDatabase.createInstance();
-        Connection connection = sqlDatabase.connectDB();
-
-
+        Connection connection = null;
         Scanner sc = new Scanner(System.in);
         boolean displayMenu = true;
         boolean displayOperationMenu = true;
@@ -32,26 +31,26 @@ public class Main {
         IOperation functionality = null;
         int authChoice = 0;
 
+        try {
+             connection = sqlDatabase.connectDB();
+        }catch (connectionMySqlException e){
+            System.err.println(e.getMessage());
+            System.exit(0);
+        }
+
         System.out.println("Welcome to our File Management Application");
         do {
-
             try {
-            System.out.println("1.Signup");
-            System.out.println("2.Login");
-            System.out.print("choose Operation number: ");
+                AuthenticationMenu.AuthMenu();
                authChoice = NotInteger.scanInteger(authChoice);
             }catch (NotIntegerException e) {
             System.err.println(e.getMessage());
             Thread.sleep(100);
                 continue;
             }
-
-
             switch (authChoice){
-
-
                 case 1:
-                    Signup.signupUser(connection);
+                    functionality = Signup.signupUser(connection);
                     Variables.readerUser = true;
                     displayMenu =false;
                     break;
@@ -63,11 +62,7 @@ public class Main {
                     System.out.println("invalid input, try again");
                     break;
             }
-
         }while (displayMenu);
-
-
-
 
         do {
             if(Variables.AdminUser){
@@ -86,7 +81,6 @@ public class Main {
                 Thread.sleep(100);
                 continue;
             }
-
             System.out.println("----------------------");
             switch (userMenuChoice){
                 case 0:
@@ -94,36 +88,55 @@ public class Main {
                     displayOperationMenu =false;
                     break;
                 case 1:
-                    functionality.readFiles(connection);
+                    try {
+                        functionality.readFiles(connection);
+                    }catch (NotAllowedOperationException e){
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 2:
-                    System.out.print("Enter file path: ");
-                    String filePath = sc.next();
-                    functionality.importFiles(connection,filePath);
+                    try {
+                        functionality.importFiles(connection);
+                    }catch (NotAllowedOperationException e){
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 3:
-                    System.out.print("Enter file.type: ");
-                    String fileAndType = sc.next();
-                    functionality.rollBack(connection,fileAndType);
+                    try {
+                        System.out.print("Enter file.type: ");
+                        String fileAndType = sc.next();
+                        functionality.rollBack(connection,fileAndType);
+                    }catch (NotAllowedOperationException e){
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 4:
-                   System.out.print("Enter file: ");
-                    String fileName = sc.next();
-                   functionality.exportFile(connection,fileName);
+                    try {
+                        System.out.print("Enter file: ");
+                        String fileName = sc.next();
+                        functionality.exportFile(connection,fileName);
+                    }catch (NotAllowedOperationException e){
+                        System.out.println(e.getMessage());
+                    }
                    break;
                 case 5:
-                    functionality.createClassification(connection);
+                    try {
+                        functionality.createClassification(connection);
+                    }catch (NotAllowedOperationException e){
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 6:
-                    functionality.deleteFiles(connection);
+                    try {
+                        functionality.deleteFiles(connection);
+                    }catch (NotAllowedOperationException e){
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 default:
-                    //exception
-                    System.out.println("Not Implemented yet");
+                    System.out.println("Invalid input, choose another operation number");
                     break;
             }
-
-
         }while (displayOperationMenu);
     }
 }

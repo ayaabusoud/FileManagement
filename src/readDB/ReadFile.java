@@ -16,6 +16,9 @@ public class ReadFile {
         PreparedStatement preparedStmt = connection.prepareStatement(query);
         preparedStmt.setString (1, fileAttribute[1]);
         ResultSet result = preparedStmt.executeQuery();
+        if (!result.next()){
+            System.out.println("There is no such files in the system.");
+        }
         while (result.next()){
             System.out.println(DecryptionFile.decryption(result.getString("name"))+"."+result.getString("type")+": ");
             System.out.println(result.getString("context"));

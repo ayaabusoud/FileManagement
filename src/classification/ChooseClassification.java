@@ -18,9 +18,7 @@ public class ChooseClassification {
         System.out.println("Size (L/M/S)");
         try {
             DisplayClassifications.display(connection);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+
         Scanner sc = new Scanner(System.in);
         System.out.print("enter your choice: ");
         String choice = sc.next() ;
@@ -33,12 +31,13 @@ public class ChooseClassification {
             OperationController.control(connection,fileAttribute,type);
         }
         else{
-            try {
+
                 fileAttribute = GetClassificationContent.get(connection,choice);
                 ClassificationController.control(connection,fileAttribute,type);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+
+        }
+        }catch (SQLException e){
+            throw new RuntimeException(e);
         }
     }
 

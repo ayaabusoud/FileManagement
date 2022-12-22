@@ -13,8 +13,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class OverwriteVersion {
-    public static void overwriteFile(Connection connection, InputStream inputStream, FileInfo newFile) throws SQLException, IOException {
-
+    public static void overwriteFile(Connection connection, InputStream inputStream, FileInfo newFile) {
+    try{
         FileInfo previousFile =  GetFileInfo.getInfo(connection, newFile);
         DeleteLastVersion.deleteFile(connection,previousFile);
         UpdateLastVersion.updateToZero(connection, Variables.BACKUP_TABLE,previousFile);
@@ -22,5 +22,8 @@ public class OverwriteVersion {
         AddFile.addNewFile(connection,Variables.BACKUP_TABLE,previousFile);
         newFile.setVersion(previousFile.getVersion()+1);
         AddFile.addNewFile(connection,Variables.FILE_TABLE,inputStream,newFile);
+     }catch (SQLException | IOException e){
+        throw new RuntimeException(e);
+    }
     }
 }
