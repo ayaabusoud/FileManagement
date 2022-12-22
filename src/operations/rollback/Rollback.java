@@ -16,8 +16,11 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class Rollback implements IRollback {
-        public void rollbackVersion(Connection connection, String fileNameAndType) throws SQLException, IOException {
-            FileInfo file = GetFileInfo.getInfo(connection, FileNameAndType.splitNameAndType(fileNameAndType));
+        public void rollbackVersion(Connection connection, String fileNameAndType){
+            FileInfo file = null;
+            try {
+                file = GetFileInfo.getInfo(connection, FileNameAndType.splitNameAndType(fileNameAndType));
+
             if (file.getVersionType() == Variables.ONE_VERSION_TYPE) {
                 DeleteLastVersion.deleteFile(connection, file);
             } else if (file.getVersionType() == Variables.DEFAULT_VERSION_CONTROL_TYPE) {
@@ -30,8 +33,13 @@ public class Rollback implements IRollback {
                 if (CheckFileExistences.previousVersionIsExist(connection, backupFile)) {
                     backupFile.setVersionType(Variables.DEFAULT_VERSION_CONTROL_TYPE);
                 }
-                backupFile.setLastVersion(1);
+                backupFile.setLastVersion(Variables.LAST_VERSION);
                 AddFile.addNewFile(connection, Variables.FILE_TABLE, backupFile);
+            }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
     }

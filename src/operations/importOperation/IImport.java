@@ -1,11 +1,10 @@
 package operations.importOperation;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import exceptions.IncorrectFilePathException;
+
 import java.sql.Connection;
-import java.sql.SQLException;
 
 public interface IImport {
-    public void importFile(Connection connection) throws SQLException, IOException, InterruptedException;
+    public void importFile(Connection connection) throws IncorrectFilePathException;
 
 }

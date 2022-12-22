@@ -27,7 +27,7 @@ public class Factory {
         obj.setRead(new Read());
         obj.setClassification(new CreateClassification());
         }
-        else{
+        else if(type.equals(UserTypes.Reader)){
             obj.setRead(new Read());
         }
         return obj;

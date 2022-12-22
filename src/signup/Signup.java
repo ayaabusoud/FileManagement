@@ -1,7 +1,10 @@
 package signup;
 
+import factory.Factory;
+import operations.operation.IOperation;
 import readDB.CheckUsernameExistences;
 import users.User;
+import users.UserTypes;
 import writeDB.AddUser;
 
 import java.io.IOException;
@@ -10,7 +13,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Signup {
-    public static void signupUser(Connection connection) throws SQLException, IOException {
+    public static IOperation signupUser(Connection connection) throws SQLException, IOException {
         User reader = new User();
         String username="";
         String password="";
@@ -35,6 +38,7 @@ public class Signup {
         reader.setPassword(password);
 
         AddUser.addNewUser(connection,reader);
+        return  Factory.createUserFunctionality(UserTypes.Reader);
     }
 
 }

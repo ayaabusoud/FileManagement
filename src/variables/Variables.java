@@ -9,6 +9,7 @@ public class Variables {
     public final static int OVERWRITE_VERSION_CONTROL_TYPE = 2;
     public final static int DEFAULT_VERSION_CONTROL_TYPE = 1;
     public final static int ONE_VERSION_TYPE = 0;
+    public final static int LAST_VERSION = 1;
     public static final String BACKUP_TABLE = "backup";
     public static final String noCondition = "Any";
     public static final String READ_FILES = "read";
@@ -16,6 +17,8 @@ public class Variables {
     public static final String FILE_NAME = "name" ;
     public static final String  FILE_TYPE = "type" ;
     public static final String  FILE_SIZE = "size" ;
+    public static final String  EQUALS = " = " ;
+    public static final String  NOT_EQUALS = " != " ;
 
     public static boolean AdminUser = false;
     public static boolean StaffUser = false;
