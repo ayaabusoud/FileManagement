@@ -1,17 +1,14 @@
 package classification;
 
-//import menu.ClassificationMenu;
-import menue.ClassificationMenu;
-import readDB.CheckClassificationExistences;
+import menu.ClassificationMenu;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Scanner;
 
 public class NewClassification {
 
 
-    public static String[] create(Connection connection) throws SQLException {
+    public static String[] create(Connection connection){
         Scanner sc = new Scanner(System.in);
         boolean exit = true;
         int choice ;
@@ -21,14 +18,9 @@ public class NewClassification {
         String[] classificationAttributes = new String[4];
         String formattedContext = null;
 
-        System.out.print("Enter the classification name: ");
-        classificationAttributes[0] = sc.next();
-        boolean result =  CheckClassificationExistences.isExist(connection ,classificationAttributes[0]) ;
-        while (result == true){
-            System.out.println("This name already exists, please choose another name: ");
-            classificationAttributes[0] = sc.next();
-            result =  CheckClassificationExistences.isExist(connection ,classificationAttributes[0]) ;
-        }
+
+        classificationAttributes[0] = CheckUniqueClassificationName.checkName(connection);
+
         System.out.println("create classification according to: (at least one choice)");
 
         ClassificationMenu.classificationMenu();

@@ -1,7 +1,8 @@
 package login;
 
 import factory.Factory;
-import menue.OperationMenu;
+import menu.AuthenticationMenu;
+import menu.OperationMenu;
 import operations.operation.IOperation;
 import readDB.GetUserPassword;
 import signup.Signup;
@@ -23,7 +24,7 @@ public class Login {
         IOperation userAccess = null;
         int key;
         Scanner sc = new Scanner(System.in);
-        OperationMenu.loginMenu();
+        AuthenticationMenu.loginMenu();
         int userType = sc.nextInt();
         switch (userType){
             case 1:
