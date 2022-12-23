@@ -1,6 +1,7 @@
 package classification;
 import controller.ClassificationController;
 import controller.OperationController;
+import exceptions.RunTimeException;
 import readDB.DisplayClassifications;
 import readDB.GetClassificationContent;
 import variables.Variables;
@@ -11,7 +12,7 @@ import java.util.Scanner;
 
 public class ChooseClassification {
 
-    public static void classificationChoice(String type, Connection connection){
+    public static void classificationChoice(String type, Connection connection) {
         System.out.println("According to: ");
         System.out.println("Name");
         System.out.println("Type");
@@ -36,8 +37,8 @@ public class ChooseClassification {
                 ClassificationController.control(connection,fileAttribute,type);
 
         }
-        }catch (SQLException e){
-            throw new RuntimeException(e);
+        }catch (RunTimeException e) {
+            System.err.println(e.getMessage());
         }
     }
 

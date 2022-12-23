@@ -1,6 +1,7 @@
 package operations.createClassification;
 
 import classification.NewClassification;
+import exceptions.RunTimeException;
 import writeDB.AddClassification;
 
 import java.io.IOException;
@@ -15,8 +16,8 @@ public class CreateClassification implements ICreateClassification{
                 AddClassification.addNewClassification(connection,classificationAttributes);
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }catch (SQLException e) {
-            throw new RuntimeException(e);
+        }catch (RunTimeException e) {
+            System.err.println(e.getMessage());
         }
         System.out.println("successfully added");
     }

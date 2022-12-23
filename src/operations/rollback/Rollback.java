@@ -1,5 +1,6 @@
 package operations.rollback;
 
+import exceptions.RunTimeException;
 import file.FileInfo;
 import file.FileNameAndType;
 import readDB.CheckFileExistences;
@@ -36,8 +37,8 @@ public class Rollback implements IRollback {
                 backupFile.setLastVersion(Variables.LAST_VERSION);
                 AddFile.addNewFile(connection, Variables.FILE_TABLE, backupFile);
             }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+            } catch (RunTimeException e) {
+                System.err.println(e.getMessage());
             }catch (IOException e) {
                 throw new RuntimeException(e);
             }

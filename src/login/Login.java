@@ -1,5 +1,6 @@
 package login;
 
+import exceptions.RunTimeException;
 import factory.Factory;
 import menu.AuthenticationMenu;
 import menu.OperationMenu;
@@ -20,7 +21,7 @@ public class Login {
 
     private static final int AdminKey = 111;
     private static final int StaffKey = 123;
-    public static IOperation loginUser(Connection connection) throws SQLException {
+    public static IOperation loginUser(Connection connection) throws RunTimeException {
         IOperation userAccess = null;
         int key;
         Scanner sc = new Scanner(System.in);
@@ -58,8 +59,8 @@ public class Login {
             case 4:
                 try {
                     Signup.signupUser(connection);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
+                } catch (RunTimeException e) {
+                    System.err.println(e.getMessage());
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

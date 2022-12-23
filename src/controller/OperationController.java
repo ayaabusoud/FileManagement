@@ -1,5 +1,6 @@
 package controller;
 
+import exceptions.RunTimeException;
 import readDB.ReadFile;
 import variables.Variables;
 import writeDB.DeleteFiles;
@@ -9,7 +10,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class OperationController {
-    public static void control(Connection connection,String[] fileAttribute, String operationType){
+    public static void control(Connection connection,String[] fileAttribute, String operationType) throws RunTimeException{
         try {
         if (operationType.equalsIgnoreCase(Variables.READ_FILES)){
                 ReadFile.readFiles(connection,fileAttribute);
@@ -17,8 +18,8 @@ public class OperationController {
         }  else if (operationType.equalsIgnoreCase(Variables.DELETE_FILES)) {
                 DeleteFiles.deleteFiles(connection,fileAttribute);
         }
-    } catch (SQLException e) {
-        throw new RuntimeException(e);
-    }
+    }catch (RunTimeException e) {
+            System.err.println(e.getMessage());
+        }
     }
 }

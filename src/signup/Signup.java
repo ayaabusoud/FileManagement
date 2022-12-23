@@ -1,5 +1,6 @@
 package signup;
 
+import exceptions.RunTimeException;
 import factory.Factory;
 import operations.operation.IOperation;
 import readDB.CheckUsernameExistences;
@@ -13,7 +14,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Signup {
-    public static IOperation signupUser(Connection connection) throws SQLException, IOException {
+    public static IOperation signupUser(Connection connection) throws RunTimeException, IOException {
         User reader = new User();
         String username="";
         String password="";
