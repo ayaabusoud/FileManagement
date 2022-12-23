@@ -21,7 +21,6 @@ public class DeleteFilesByClassification {
         if(context[2].equals(Variables.noCondition)){
             sizeQuery = Variables.NOT_EQUALS;
         }
-
         String query ="DELETE FROM file WHERE name"+nameQuery+"? AND type"+typeQuery+"? AND size"+sizeQuery+"? ";
         PreparedStatement preparedStmt = connection.prepareStatement(query);
         preparedStmt.setString (1,  EncryptionFile.encryption(context[0]));
