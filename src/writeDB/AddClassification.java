@@ -1,17 +1,14 @@
 package writeDB;
 
-import encryption.EncryptionFile;
-import exceptions.RunTimeException;
-import file.FileInfo;
+import exceptions.SqlQueryException;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class AddClassification {
-    public static void addNewClassification(Connection connection, String[] classificationAttributes) throws RunTimeException, IOException {
+    public static void addNewClassification(Connection connection, String[] classificationAttributes) throws SqlQueryException{
         String query = "INSERT INTO classification (name,context,formattedContext) values (?,?,?)";
         try
         {
@@ -22,7 +19,7 @@ public class AddClassification {
             preparedStmt.execute();
         }
         catch (SQLException e) {
-            throw new RunTimeException("Add Classification Query Failed");
+            throw new SqlQueryException("Add Classification Query Failed");
         }
     }
 }

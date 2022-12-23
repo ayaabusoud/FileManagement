@@ -1,7 +1,8 @@
 package operations.importOperation;
 
+import exceptions.FileSizeException;
 import exceptions.IncorrectFilePathException;
-import exceptions.RunTimeException;
+import exceptions.SqlQueryException;
 import file.FileInfo;
 import file.FileNameAndType;
 import readDB.CheckFileExistences;
@@ -12,7 +13,6 @@ import writeDB.AddFile;
 
 import java.io.*;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Import implements IImport {
@@ -57,13 +57,12 @@ public class Import implements IImport {
                     DefaultVersion.defaultVersion(connection,Variables.FILE_TABLE,inputStream,newFile);
             }
         }
-        catch (RunTimeException e) {
+        catch (SqlQueryException e) {
             System.err.println(e.getMessage());
         }
-        catch (IOException e) {
-            throw new RuntimeException(e);
+        catch (FileSizeException e) {
+            System.err.println(e.getMessage());
         }
         System.out.println("Successfully added");
     }
-
 }

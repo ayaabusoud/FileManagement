@@ -1,16 +1,15 @@
 package controller;
 
-import exceptions.RunTimeException;
+import exceptions.SqlQueryException;
 import readDB.ReadFilesByClassification;
 import variables.Variables;
 import writeDB.DeleteFilesByClassification;
 //import writeDB.DeleteFilesByClassification;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
 public class ClassificationController {
-    public static void control(Connection connection, String[] fileAttribute, String operationType) throws RunTimeException {
+    public static void control(Connection connection, String[] fileAttribute, String operationType) {
         try {
 
 
@@ -22,7 +21,7 @@ public class ClassificationController {
                 DeleteFilesByClassification.deleteFiles(connection, fileAttribute);
 
             }
-        } catch (RunTimeException e) {
+        } catch (SqlQueryException e) {
             System.err.println(e.getMessage());
         }
     }

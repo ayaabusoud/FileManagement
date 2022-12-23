@@ -1,7 +1,6 @@
 package readDB;
 
-import encryption.EncryptionFile;
-import exceptions.RunTimeException;
+import exceptions.SqlQueryException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CheckUsernameExistences {
-    public static boolean isExists(Connection connection, String username) throws RunTimeException {
+    public static boolean isExists(Connection connection, String username) throws SqlQueryException {
         try {
         String query = "SELECT * FROM user WHERE name = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -19,9 +18,9 @@ public class CheckUsernameExistences {
                 return true;
             }
             return false;
-           }  catch (SQLException e) {
-            throw new RunTimeException("Fail Check  User name Existences Query");
-              }
+            }  catch (SQLException e) {
+            throw new SqlQueryException("Check User name Existences Query Failed");
+            }
 
     }
 }

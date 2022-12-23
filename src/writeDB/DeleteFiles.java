@@ -1,15 +1,13 @@
 package writeDB;
 
-import encryption.DecryptionFile;
-import exceptions.RunTimeException;
+import exceptions.SqlQueryException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DeleteFiles {
-    public static void deleteFiles(Connection connection, String[]fileAttribute)throws RunTimeException {
+    public static void deleteFiles(Connection connection, String[]fileAttribute)throws SqlQueryException {
         try
         {
             String query ="DELETE FROM file WHERE "+fileAttribute[0]+" = ?";
@@ -18,7 +16,7 @@ public class DeleteFiles {
             preparedStmt.execute();
         }
         catch (SQLException e) {
-            throw new RunTimeException("Delete Files Query Failed");
+            throw new SqlQueryException("Delete Files Query Failed");
         }
     }
 }

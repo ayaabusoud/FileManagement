@@ -1,18 +1,18 @@
 package classification;
 import controller.ClassificationController;
 import controller.OperationController;
-import exceptions.RunTimeException;
+import exceptions.NotAllowedOperationException;
+import exceptions.SqlQueryException;
 import readDB.DisplayClassifications;
 import readDB.GetClassificationContent;
 import variables.Variables;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Scanner;
 
 public class ChooseClassification {
 
-    public static void classificationChoice(String type, Connection connection) {
+    public static void classificationChoice(String type, Connection connection) throws NotAllowedOperationException{
         System.out.println("According to: ");
         System.out.println("Name");
         System.out.println("Type");
@@ -34,10 +34,13 @@ public class ChooseClassification {
         else{
 
                 fileAttribute = GetClassificationContent.get(connection,choice);
+                if (fileAttribute[0] == null){
+                    throw new NotAllowedOperationException("There is no classification available with this name, try again");
+                }
                 ClassificationController.control(connection,fileAttribute,type);
 
         }
-        }catch (RunTimeException e) {
+        }catch (SqlQueryException e) {
             System.err.println(e.getMessage());
         }
     }

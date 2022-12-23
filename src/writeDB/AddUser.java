@@ -1,9 +1,7 @@
 package writeDB;
 
 import encryption.EncryptPassword;
-import encryption.EncryptionFile;
-import exceptions.RunTimeException;
-import file.FileInfo;
+import exceptions.SqlQueryException;
 import users.User;
 
 import java.io.IOException;
@@ -12,7 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class AddUser {//
-    public static void addNewUser(Connection connection, User newReader) throws RunTimeException, IOException {
+    public static void addNewUser(Connection connection, User newReader) throws SqlQueryException {
         String query = "INSERT INTO user (name,password) values (?,?)";
         try {
             PreparedStatement preparedStmt = connection.prepareStatement(query);
@@ -22,7 +20,7 @@ public class AddUser {//
             System.out.println("successfully added");
         }
         catch (SQLException e) {
-            throw new RunTimeException("Add New User Query Failed");
+            throw new SqlQueryException("Add New User Query Failed");
         }
     }
 }

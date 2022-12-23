@@ -1,12 +1,11 @@
 package operations.createClassification;
 
 import classification.NewClassification;
-import exceptions.RunTimeException;
+import exceptions.SqlQueryException;
 import writeDB.AddClassification;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.SQLException;
 
 public class CreateClassification implements ICreateClassification{
     public void create(Connection connection){
@@ -14,9 +13,7 @@ public class CreateClassification implements ICreateClassification{
             String[] classificationAttributes = NewClassification.create(connection);
 
                 AddClassification.addNewClassification(connection,classificationAttributes);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }catch (RunTimeException e) {
+        } catch (SqlQueryException e) {
             System.err.println(e.getMessage());
         }
         System.out.println("successfully added");

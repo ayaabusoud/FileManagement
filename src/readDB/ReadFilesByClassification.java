@@ -2,7 +2,7 @@ package readDB;
 
 import encryption.DecryptionFile;
 import encryption.EncryptionFile;
-import exceptions.RunTimeException;
+import exceptions.SqlQueryException;
 import variables.Variables;
 
 import java.sql.Connection;
@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ReadFilesByClassification {
-    public static void readFiles(Connection connection, String[]context) throws RunTimeException {
+    public static void readFiles(Connection connection, String[]context) throws SqlQueryException {
         String nameQuery = Variables.EQUALS;
         String typeQuery  =Variables.EQUALS;
         String sizeQuery =Variables.EQUALS;
@@ -40,7 +40,7 @@ public class ReadFilesByClassification {
                 System.out.println("----------------");
             }
         }catch (SQLException e) {
-            throw new RunTimeException("Delete Files By Classification Query Failed");
+            throw new SqlQueryException("Delete Files By Classification Query Failed");
         }
 
     }

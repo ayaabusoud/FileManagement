@@ -1,7 +1,7 @@
 package readDB;
 
 import encryption.EncryptionFile;
-import exceptions.RunTimeException;
+import exceptions.SqlQueryException;
 import file.FileInfo;
 
 import java.sql.Connection;
@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 public class CheckFileExistences {
 
-    public static boolean isExist(Connection connection, String tableName, FileInfo newFile) throws RunTimeException {
+    public static boolean isExist(Connection connection, String tableName, FileInfo newFile) throws SqlQueryException {
         String query = "SELECT name FROM " + tableName + " WHERE name = ? and type = ?";
         PreparedStatement preparedStmt = null;
         ResultSet result;
@@ -25,11 +25,11 @@ public class CheckFileExistences {
             }
             return false;
         } catch (SQLException e) {
-            throw new RunTimeException("Fail Check File isExist Query");
+            throw new SqlQueryException("Check File isExist Query Failed");
         }
 
     }
-    public static boolean previousVersionIsExist(Connection connection, FileInfo file) throws RunTimeException {
+    public static boolean previousVersionIsExist(Connection connection, FileInfo file) throws SqlQueryException {
         String query = "SELECT name FROM file WHERE name = ? and type = ? and version = ?";
         ResultSet result;
         try {
@@ -43,7 +43,7 @@ public class CheckFileExistences {
             }
             return false;
         } catch (SQLException e) {
-            throw new RunTimeException("Fail Check previous Version Is Exist Query");
+            throw new SqlQueryException("Check previous Version Is Exist Query Failed");
         }
     }
 }

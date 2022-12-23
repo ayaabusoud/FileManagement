@@ -1,7 +1,7 @@
 package writeDB;
 
 import encryption.EncryptionFile;
-import exceptions.RunTimeException;
+import exceptions.SqlQueryException;
 import file.FileInfo;
 
 import java.sql.Connection;
@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class DeleteBackup {
     final static String QUERY = "DELETE FROM backup WHERE name = ? AND type = ? AND version = ?";
 
-    public static void deleteFile(Connection connection, FileInfo file) throws RunTimeException {
+    public static void deleteFile(Connection connection, FileInfo file) throws SqlQueryException {
 
         PreparedStatement preparedStmt = null;
         try {
@@ -21,7 +21,7 @@ public class DeleteBackup {
             preparedStmt.setInt(3, file.getVersion());
             preparedStmt.execute();
         } catch (SQLException e) {
-            throw new RunTimeException("Delete Backup Query Failed");
+            throw new SqlQueryException("Delete Backup Query Failed");
         }
 
     }
