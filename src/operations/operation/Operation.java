@@ -2,6 +2,7 @@ package operations.operation;
 
 import exceptions.IncorrectFilePathException;
 import exceptions.NotAllowedOperationException;
+import file.FileInfo;
 import operations.createClassification.ICreateClassification;
 import operations.delete.IDelete;
 import operations.export.IExport;
@@ -59,7 +60,7 @@ public class Operation implements IOperation {
         read.read(connection);
     }
     @Override
-    public void exportFile(Connection connection , String nameOfFile) throws NotAllowedOperationException{
+    public void exportFile(Connection connection , FileInfo nameOfFile) throws NotAllowedOperationException{
         if(export == null){
             throw new NotAllowedOperationException("This operation is not allowed");
         }
