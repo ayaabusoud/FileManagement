@@ -11,9 +11,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class AddUser {//INSERT
+public class AddUser {//
     public static void addNewUser(Connection connection, User newReader) throws RunTimeException, IOException {
-        String query = " INTO user (name,password) values (?,?)";
+        String query = "INSERT INTO user (name,password) values (?,?)";
         try {
             PreparedStatement preparedStmt = connection.prepareStatement(query);
             preparedStmt.setString (1,  newReader.getName());

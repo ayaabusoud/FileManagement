@@ -4,6 +4,8 @@ import database.IDatabase;
 import database.SqlDatabase;
 import exceptions.*;
 import factory.Factory;
+import file.FileInfo;
+import file.FileNameAndType;
 import login.Login;
 import menu.AuthenticationMenu;
 import menu.OperationMenu;
@@ -110,9 +112,10 @@ public class Main {
                     break;
                 case 4:
                     try {
-                        System.out.print("Enter file: ");
-                        String fileName = sc.next();
-                        functionality.exportFile(connection,fileName);
+                        System.out.print("Enter file.type: ");
+                        String file = sc.next();
+                        FileInfo newFile = FileNameAndType.splitNameAndType(file);
+                        functionality.exportFile(connection,newFile);
                     }catch (NotAllowedOperationException e){
                         System.out.println(e.getMessage());
                     }

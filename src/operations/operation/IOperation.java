@@ -1,6 +1,7 @@
 package operations.operation;
 
 import exceptions.NotAllowedOperationException;
+import file.FileInfo;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -14,7 +15,7 @@ public interface IOperation {
     public void readFiles(Connection connection) throws SQLException;
     public void rollBack(Connection connection, String path) throws SQLException, IOException;
     public void createClassification(Connection connection) throws SQLException;
-    public void exportFile(Connection connection, String nameOfFile) throws SQLException;
+    public void exportFile(Connection connection, FileInfo file) throws SQLException;
 
     //void exportFile(String nameOfFile, Connection connection);
 }
