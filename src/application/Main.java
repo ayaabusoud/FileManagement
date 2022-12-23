@@ -2,10 +2,7 @@ package application;
 
 import database.IDatabase;
 import database.SqlDatabase;
-import exceptions.NotAllowedOperationException;
-import exceptions.NotInteger;
-import exceptions.NotIntegerException;
-import exceptions.connectionMySqlException;
+import exceptions.*;
 import factory.Factory;
 import file.FileInfo;
 import file.FileNameAndType;
@@ -18,6 +15,7 @@ import users.UserTypes;
 import variables.Variables;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 

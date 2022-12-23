@@ -2,7 +2,6 @@ package variables;
 
 public class Variables {
 
-
     public static final String FILE_TABLE = "file";
     public static final int DEFAULT_VERSION_TYPE = 1;
     public static final int OVERWRITE_VERSION_TYPE = 2;
@@ -19,7 +18,6 @@ public class Variables {
     public static final String  FILE_SIZE = "size" ;
     public static final String  EQUALS = " = " ;
     public static final String  NOT_EQUALS = " != " ;
-
     public static boolean AdminUser = false;
     public static boolean StaffUser = false;
     public static boolean readerUser = false;

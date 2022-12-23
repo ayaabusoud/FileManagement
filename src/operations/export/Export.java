@@ -1,13 +1,7 @@
 package operations.export;
 
-import encryption.EncryptionFile;
-import exceptions.FileIsAlreadyExist;
-import file.FileInfo;
-import readDB.CheckFileExistences;
-import readDB.ExportFiles;
-import variables.Variables;
+import exceptions.RunTimeException;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,19 +11,18 @@ import java.util.Scanner;
 public class Export implements IExport {
 
     @Override
-    public void export(Connection connection , FileInfo file ){
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Enter folder name: ");
-        String folder = sc.next();
-
-        File newFolder = new File("/"+folder);
-        boolean bool = newFolder.mkdir();
-        try {
-            ExportFiles.export(connection,file,folder);
-        }catch (FileIsAlreadyExist e){
-            System.err.println(e.getMessage());
+    public void export(Connection connection ,String FileName ) throws RunTimeException {
+        try{
+            PreparedStatement p = connection.prepareStatement("SELECT context " +
+                    "INTO OUTFILE '/MyFolder/student.java' " +
+                    "FROM file WHERE name = ? " );
+            p.setString(1,FileName);
+            System.out.println("export successfully ... ");
+            p.executeQuery() ;
         }
-
+        catch (SQLException e) {
+            throw new RunTimeException("Export Query Failed");
+        }
 
     }
 }

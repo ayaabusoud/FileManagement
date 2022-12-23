@@ -1,5 +1,6 @@
 package classification;
 
+import exceptions.RunTimeException;
 import readDB.CheckClassificationExistences;
 
 import java.sql.Connection;
@@ -19,8 +20,8 @@ public class CheckUniqueClassificationName {
                 if(loop){
                     System.out.println("The classification name is already exit, choose another one..");
                 }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+            }  catch (RunTimeException e) {
+                System.err.println(e.getMessage());
             }
         }
         return name;

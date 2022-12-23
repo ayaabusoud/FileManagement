@@ -1,6 +1,7 @@
 package writeDB;
 
 import encryption.EncryptionFile;
+import exceptions.RunTimeException;
 import variables.Variables;
 
 import java.sql.Connection;
@@ -8,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class DeleteFilesByClassification {
-    public static void deleteFiles(Connection connection, String[]context) throws SQLException {
+    public static void deleteFiles(Connection connection, String[]context) throws RunTimeException{
         String nameQuery = Variables.EQUALS;
         String typeQuery  =Variables.EQUALS;
         String sizeQuery =Variables.EQUALS;
@@ -21,12 +22,17 @@ public class DeleteFilesByClassification {
         if(context[2].equals(Variables.noCondition)){
             sizeQuery = Variables.NOT_EQUALS;
         }
-        String query ="DELETE FROM file WHERE name"+nameQuery+"? AND type"+typeQuery+"? AND size"+sizeQuery+"? ";
-        PreparedStatement preparedStmt = connection.prepareStatement(query);
-        preparedStmt.setString (1,  EncryptionFile.encryption(context[0]));
-        preparedStmt.setString (2,  context[1]);
-        preparedStmt.setString (3,  context[2]);
-        preparedStmt.execute();
+        try {
+            String query ="DELETE FROM file WHERE name"+nameQuery+"? AND type"+typeQuery+"? AND size"+sizeQuery+"? ";
+            PreparedStatement preparedStmt = connection.prepareStatement(query);
+            preparedStmt.setString (1,  EncryptionFile.encryption(context[0]));
+            preparedStmt.setString (2,  context[1]);
+            preparedStmt.setString (3,  context[2]);
+            preparedStmt.execute();
+        }catch (SQLException e) {
+            throw new RunTimeException("Delete Files By Classification Query Failed");
+        }
+
 
     }
 }

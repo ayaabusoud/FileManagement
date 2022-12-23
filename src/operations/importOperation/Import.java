@@ -1,6 +1,7 @@
 package operations.importOperation;
 
 import exceptions.IncorrectFilePathException;
+import exceptions.RunTimeException;
 import file.FileInfo;
 import file.FileNameAndType;
 import readDB.CheckFileExistences;
@@ -55,9 +56,11 @@ public class Import implements IImport {
                 else
                     DefaultVersion.defaultVersion(connection,Variables.FILE_TABLE,inputStream,newFile);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
+        }
+        catch (RunTimeException e) {
+            System.err.println(e.getMessage());
+        }
+        catch (IOException e) {
             throw new RuntimeException(e);
         }
         System.out.println("Successfully added");
