@@ -3,12 +3,12 @@ package signup;
 import exceptions.SqlQueryException;
 import factory.Factory;
 import operations.operation.IOperation;
-import readDB.CheckUsernameExistences;
+import readDB.CheckExistence;
 import users.User;
 import users.UserTypes;
+import variables.Variables;
 import writeDB.AddUser;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.util.Scanner;
 
@@ -23,7 +23,7 @@ public class Signup {
         while (!usernameIsValid){
         System.out.print("Enter username: ");
         username = sc.next();
-        if(CheckUsernameExistences.isExists(connection,username)){
+        if(CheckExistence.isExists(connection, Variables.USER_TABLE,username)){
             System.out.println("The username is exists, please choose another one: ");
         }else {
             usernameIsValid = true;

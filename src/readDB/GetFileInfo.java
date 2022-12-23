@@ -17,16 +17,7 @@ public class GetFileInfo {
             preparedStmt.setString(1, EncryptionFile.encryption(file.getName()));
             preparedStmt.setString(2, file.getType());
             result = preparedStmt.executeQuery();
-
-            if (result.next()) {
-                file.setName(DecryptionFile.decryption(result.getString("name")));
-                file.setType(result.getString("type"));
-                file.setContext(result.getBlob("context"));
-                file.setVersion(result.getInt("version"));
-                file.setSize(result.getString("size"));
-                file.setVersionType(result.getInt("versionType"));
-            }
-            return file;
+            return GetInfo.getInfo(file,result);
         } catch (SQLException e) {
             throw new SqlQueryException("Get File Info Query Failed ");
         }

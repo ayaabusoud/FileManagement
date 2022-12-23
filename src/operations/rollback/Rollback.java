@@ -4,6 +4,7 @@ import exceptions.SqlQueryException;
 import file.FileInfo;
 import file.FileNameAndType;
 import readDB.CheckFileExistences;
+import readDB.CheckPreviousFileExistence;
 import readDB.GetBackupInfo;
 import readDB.GetFileInfo;
 import variables.Variables;
@@ -27,14 +28,16 @@ public class Rollback implements IRollback {
 
             if (file.getVersionType() == Variables.ONE_VERSION_TYPE) {
                 DeleteLastVersion.deleteFile(connection, file);
-            } else if (file.getVersionType() == Variables.DEFAULT_VERSION_CONTROL_TYPE) {
+            }
+            else if (file.getVersionType() == Variables.DEFAULT_VERSION_CONTROL_TYPE) {
                 DeleteLastVersion.deleteFile(connection, file);
                 UpdateLastVersion.updateToOne(connection, Variables.FILE_TABLE, file);
-            } else if (file.getVersionType() == Variables.OVERWRITE_VERSION_CONTROL_TYPE) {
+            }
+            else if (file.getVersionType() == Variables.OVERWRITE_VERSION_CONTROL_TYPE) {
                 FileInfo backupFile = GetBackupInfo.getInfo(connection, file);
                 DeleteBackup.deleteFile(connection, backupFile);
                 DeleteLastVersion.deleteFile(connection, file);
-                if (CheckFileExistences.previousVersionIsExist(connection, backupFile)) {
+                if (CheckPreviousFileExistence.previousVersionIsExist(connection, backupFile)) {
                     backupFile.setVersionType(Variables.DEFAULT_VERSION_CONTROL_TYPE);
                 }
                 backupFile.setLastVersion(Variables.LAST_VERSION);

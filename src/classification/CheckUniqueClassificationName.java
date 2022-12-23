@@ -1,7 +1,8 @@
 package classification;
 
 import exceptions.SqlQueryException;
-import readDB.CheckClassificationExistences;
+import readDB.CheckExistence;
+import variables.Variables;
 
 import java.sql.Connection;
 import java.util.Scanner;
@@ -15,7 +16,7 @@ public class CheckUniqueClassificationName {
             System.out.print("Enter the classification name: ");
             name = sc.next();
             try {
-                loop =CheckClassificationExistences.isExist(connection ,name) ;
+                loop = CheckExistence.isExists(connection, Variables.CLASSIFICATION_TABLE,name) ;
                 if(loop){
                     System.out.println("The classification name is already exit, choose another one..");
                 }
