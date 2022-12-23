@@ -1,5 +1,6 @@
 package operations.operation;
 
+import classification.ChooseClassification;
 import exceptions.IncorrectFilePathException;
 import exceptions.NotAllowedOperationException;
 import exceptions.SqlQueryException;
@@ -8,7 +9,9 @@ import operations.delete.IDelete;
 import operations.export.IExport;
 import operations.importOperation.IImport;
 import operations.read.IRead;
+import operations.read.Read;
 import operations.rollback.IRollback;
+import variables.Variables;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -59,7 +62,7 @@ public class Operation implements IOperation {
         if(read == null){
             throw new NotAllowedOperationException("This operation is not allowed");
         }
-            read.read(connection);
+        read.read(connection);
     }
     @Override
     public void exportFile(Connection connection ) throws NotAllowedOperationException{

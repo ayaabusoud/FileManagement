@@ -23,15 +23,7 @@ import java.sql.SQLException;
                 preparedStmt.setString(2, file.getType());
                 preparedStmt.setInt(3, file.getVersion() - 1);
                 result = preparedStmt.executeQuery();
-                if (result.next()) {
-                    file.setName(DecryptionFile.decryption(result.getString("name")));
-                    file.setType(result.getString("type"));
-                    file.setContext(result.getBlob("context"));
-                    file.setVersion(result.getInt("version"));
-                    file.setSize(result.getString("size"));
-                    file.setVersionType(result.getInt("versionType"));
-                }
-                return file;
+                return GetInfo.getInfo(file,result);
             } catch (SQLException e) {
                 throw new SqlQueryException("Get Backup Info Query Failed");
             }
