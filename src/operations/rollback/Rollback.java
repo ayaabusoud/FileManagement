@@ -1,5 +1,7 @@
 package operations.rollback;
 
+import exceptions.FileSizeException;
+import exceptions.SQLthrException;
 import file.FileInfo;
 import file.FileNameAndType;
 import readDB.CheckFileExistences;
@@ -16,7 +18,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class Rollback implements IRollback {
-        public void rollbackVersion(Connection connection, String fileNameAndType){
+        public void rollbackVersion(Connection connection, String fileNameAndType) throws SQLthrException {
             FileInfo file = null;
             try {
                 file = GetFileInfo.getInfo(connection, FileNameAndType.splitNameAndType(fileNameAndType));
@@ -37,9 +39,7 @@ public class Rollback implements IRollback {
                 AddFile.addNewFile(connection, Variables.FILE_TABLE, backupFile);
             }
             } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }catch (IOException e) {
-                throw new RuntimeException(e);
+                throw new SQLthrException("Failed rollback ..");
             }
         }
     }
