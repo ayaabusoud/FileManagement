@@ -1,6 +1,7 @@
 package versionControl;
 
-import exceptions.RunTimeException;
+import exceptions.FileSizeException;
+import exceptions.SqlQueryException;
 import file.FileInfo;
 import readDB.GetFileInfo;
 import variables.Variables;
@@ -11,11 +12,9 @@ import writeDB.UpdateLastVersion;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
-import java.sql.SQLException;
 
 public class OverwriteVersion {
-    public static void overwriteFile(Connection connection, InputStream inputStream, FileInfo newFile)
-     {
+    public static void overwriteFile(Connection connection, InputStream inputStream, FileInfo newFile) {
         try {
             FileInfo previousFile = GetFileInfo.getInfo(connection, newFile);
             DeleteLastVersion.deleteFile(connection, previousFile);
@@ -24,10 +23,10 @@ public class OverwriteVersion {
             AddFile.addNewFile(connection, Variables.BACKUP_TABLE, previousFile);
             newFile.setVersion(previousFile.getVersion() + 1);
             AddFile.addNewFile(connection, Variables.FILE_TABLE, inputStream, newFile);
-        } catch (RunTimeException e) {
+        } catch (SqlQueryException e) {
             System.err.println(e.getMessage());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (FileSizeException e) {
+            System.err.println(e.getMessage());
         }
-    }
+     }
 }

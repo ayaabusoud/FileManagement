@@ -1,7 +1,7 @@
 package writeDB;
 
 import encryption.EncryptionFile;
-import exceptions.RunTimeException;
+import exceptions.SqlQueryException;
 import variables.Variables;
 
 import java.sql.Connection;
@@ -9,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class DeleteFilesByClassification {
-    public static void deleteFiles(Connection connection, String[]context) throws RunTimeException{
+    public static void deleteFiles(Connection connection, String[]context) throws SqlQueryException {
         String nameQuery = Variables.EQUALS;
         String typeQuery  =Variables.EQUALS;
         String sizeQuery =Variables.EQUALS;
@@ -30,7 +30,7 @@ public class DeleteFilesByClassification {
             preparedStmt.setString (3,  context[2]);
             preparedStmt.execute();
         }catch (SQLException e) {
-            throw new RunTimeException("Delete Files By Classification Query Failed");
+            throw new SqlQueryException("Delete Files By Classification Query Failed");
         }
 
 

@@ -1,9 +1,7 @@
 package readDB;
 
 import encryption.DecryptionFile;
-import encryption.EncryptionFile;
-import exceptions.RunTimeException;
-import variables.Variables;
+import exceptions.SqlQueryException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ReadFile {
-    public static void readFiles(Connection connection, String[]fileAttribute)  throws RunTimeException {
+    public static void readFiles(Connection connection, String[]fileAttribute)  throws SqlQueryException {
         try{
             String query ="SELECT * FROM file WHERE "+fileAttribute[0]+" = ? AND lastVersion = 1";
             PreparedStatement preparedStmt = connection.prepareStatement(query);
@@ -27,7 +25,7 @@ public class ReadFile {
             }
         }
         catch (SQLException e) {
-            throw new RunTimeException("Read File Query Failed ");
+            throw new SqlQueryException("Read File Query Failed ");
         }
 
 

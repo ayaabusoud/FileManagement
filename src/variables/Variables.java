@@ -13,6 +13,7 @@ public class Variables {
     public static final String noCondition = "Any";
     public static final String READ_FILES = "read";
     public static final String DELETE_FILES = "delete" ;
+    public static final String EXPORT_FILES = "export" ;
     public static final String FILE_NAME = "name" ;
     public static final String  FILE_TYPE = "type" ;
     public static final String  FILE_SIZE = "size" ;

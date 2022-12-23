@@ -2,7 +2,7 @@ package readDB;
 
 import encryption.DecryptionFile;
 import encryption.EncryptionFile;
-import exceptions.RunTimeException;
+import exceptions.SqlQueryException;
 import file.FileInfo;
 
 import java.sql.Connection;
@@ -14,7 +14,7 @@ import java.sql.SQLException;
     public class GetBackupInfo {
         private final static String QUERY = "SELECT * FROM backup WHERE name = ? AND type = ? AND version = ?";
 
-        public static FileInfo getInfo(Connection connection, FileInfo file) throws RunTimeException {
+        public static FileInfo getInfo(Connection connection, FileInfo file) throws SqlQueryException {
             PreparedStatement preparedStmt = null;
             ResultSet result;
             try {
@@ -33,7 +33,7 @@ import java.sql.SQLException;
                 }
                 return file;
             } catch (SQLException e) {
-                throw new RunTimeException("Fail Get Backup Info Query ");
+                throw new SqlQueryException("Get Backup Info Query Failed");
             }
 
         }

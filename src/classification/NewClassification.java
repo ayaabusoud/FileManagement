@@ -1,6 +1,5 @@
 package classification;
 
-import exceptions.RunTimeException;
 import menu.ClassificationMenu;
 
 import java.sql.Connection;

@@ -1,7 +1,7 @@
 package writeDB;
 
 import encryption.EncryptionFile;
-import exceptions.RunTimeException;
+import exceptions.SqlQueryException;
 import file.FileInfo;
 
 import java.sql.Connection;
@@ -12,7 +12,7 @@ public class DeleteLastVersion {
 
     final static String QUERY = "DELETE FROM file WHERE name = ? AND type = ? AND lastVersion = 1";
 
-    public static void deleteFile(Connection connection, FileInfo file) throws RunTimeException {
+    public static void deleteFile(Connection connection, FileInfo file) throws SqlQueryException {
 
         PreparedStatement preparedStmt = null;
         try {
@@ -21,7 +21,7 @@ public class DeleteLastVersion {
             preparedStmt.setString(2, file.getType());
             preparedStmt.execute();
         } catch (SQLException e) {
-            throw new RunTimeException("Delete Latest Version Query Failed");
+            throw new SqlQueryException("Delete Latest Version Query Failed");
         }
 
     }

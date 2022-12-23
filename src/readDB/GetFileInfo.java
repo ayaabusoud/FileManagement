@@ -2,7 +2,7 @@ package readDB;
 
 import encryption.DecryptionFile;
 import encryption.EncryptionFile;
-import exceptions.RunTimeException;
+import exceptions.SqlQueryException;
 import file.FileInfo;
 
 import java.sql.*;
@@ -10,7 +10,7 @@ import java.sql.*;
 public class GetFileInfo {
     private final static String QUERY = "SELECT * FROM file WHERE name = ? AND type = ? AND lastVersion = 1";
 
-    public static FileInfo getInfo(Connection connection, FileInfo file) throws RunTimeException {
+    public static FileInfo getInfo(Connection connection, FileInfo file) throws SqlQueryException {
         ResultSet result;
         try {
             PreparedStatement preparedStmt = connection.prepareStatement(QUERY);
@@ -28,7 +28,7 @@ public class GetFileInfo {
             }
             return file;
         } catch (SQLException e) {
-            throw new RunTimeException("Fail Get File Info Query ");
+            throw new SqlQueryException("Get File Info Query Failed ");
         }
 
     }

@@ -2,7 +2,7 @@ package operations.operation;
 
 import exceptions.IncorrectFilePathException;
 import exceptions.NotAllowedOperationException;
-import exceptions.RunTimeException;
+import exceptions.SqlQueryException;
 import operations.createClassification.ICreateClassification;
 import operations.delete.IDelete;
 import operations.export.IExport;
@@ -38,67 +38,49 @@ public class Operation implements IOperation {
     public void importFiles(Connection connection) throws NotAllowedOperationException{
     if(importFile == null){
       throw new NotAllowedOperationException("This operation is not allowed");
-     }try {
-            importFile.importFile(connection);
-        }catch (IncorrectFilePathException e){
+     }
+    try {
+          importFile.importFile(connection);
+        }
+    catch (IncorrectFilePathException e){
         System.err.println(e.getMessage());
         }
 
     }
     @Override
-    public void deleteFiles(Connection connection) throws NotAllowedOperationException, RunTimeException {
+    public void deleteFiles(Connection connection) throws NotAllowedOperationException{
         if(delete == null){
             throw new NotAllowedOperationException("This operation is not allowed");
         }
-        try {
             delete.delete(connection);
-        }  catch (SQLException e) {
-            throw new RunTimeException("Delete Files Query Failed");
-        }
     }
     @Override
-    public void readFiles(Connection connection) throws RunTimeException, NotAllowedOperationException {
+    public void readFiles(Connection connection) throws NotAllowedOperationException {
         if(read == null){
             throw new NotAllowedOperationException("This operation is not allowed");
         }
-        try {
             read.read(connection);
-        }  catch (SQLException e) {
-            throw new RunTimeException("Read Files Query Failed");
-        }
     }
     @Override
-    public void exportFile(Connection connection , String nameOfFile) throws RunTimeException, NotAllowedOperationException{
+    public void exportFile(Connection connection ) throws NotAllowedOperationException{
         if(export == null){
             throw new NotAllowedOperationException("This operation is not allowed");
         }
-        try {
-            export.export(connection , nameOfFile);
-        } catch (SQLException e) {
-            throw new RunTimeException("Export File Query Failed");
-        }
+            export.export(connection);
     }
     @Override
-    public void rollBack(Connection connection,String path) throws RunTimeException, IOException, NotAllowedOperationException{
+    public void rollBack(Connection connection) throws NotAllowedOperationException{
         if(rollback == null){
             throw new NotAllowedOperationException("This operation is not allowed");
         }
-        try {
-            rollback.rollbackVersion(connection,path);
-        }  catch (SQLException e) {
-            throw new RunTimeException("RollBack Files Query Failed");
-        }
+            rollback.rollbackVersion(connection);
     }
     @Override
-    public void createClassification(Connection connection) throws RunTimeException, NotAllowedOperationException {
+    public void createClassification(Connection connection) throws NotAllowedOperationException {
         if(classification == null){
             throw new NotAllowedOperationException("This operation is not allowed");
         }
-        try {
             classification.create(connection);
-        }  catch (SQLException e) {
-            throw new RunTimeException("Create Classification Query Failed");
-        }
     }
 
     public IDelete getDelete() {

@@ -1,6 +1,6 @@
 package operations.rollback;
 
-import exceptions.RunTimeException;
+import exceptions.SqlQueryException;
 import file.FileInfo;
 import file.FileNameAndType;
 import readDB.CheckFileExistences;
@@ -14,10 +14,13 @@ import writeDB.UpdateLastVersion;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.SQLException;
+import java.util.Scanner;
 
 public class Rollback implements IRollback {
-        public void rollbackVersion(Connection connection, String fileNameAndType){
+        public void rollbackVersion(Connection connection){
+            Scanner sc = new Scanner(System.in);
+            System.out.print("Enter file.type: ");
+            String fileNameAndType = sc.next();
             FileInfo file = null;
             try {
                 file = GetFileInfo.getInfo(connection, FileNameAndType.splitNameAndType(fileNameAndType));
@@ -37,10 +40,8 @@ public class Rollback implements IRollback {
                 backupFile.setLastVersion(Variables.LAST_VERSION);
                 AddFile.addNewFile(connection, Variables.FILE_TABLE, backupFile);
             }
-            } catch (RunTimeException e) {
+            } catch (SqlQueryException e) {
                 System.err.println(e.getMessage());
-            }catch (IOException e) {
-                throw new RuntimeException(e);
             }
         }
     }

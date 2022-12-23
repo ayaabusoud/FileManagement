@@ -2,14 +2,18 @@ package operations.delete;
 
 
 import classification.ChooseClassification;
-import exceptions.RunTimeException;
+import exceptions.NotAllowedOperationException;
 import variables.Variables;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
 public class Delete implements IDelete {
-    public void delete(Connection connection)  {
-        ChooseClassification.classificationChoice(Variables.DELETE_FILES,connection);
+    public void delete(Connection connection){
+        try {
+            ChooseClassification.classificationChoice(Variables.DELETE_FILES,connection);
+        }catch (NotAllowedOperationException e){
+            System.err.println(e.getMessage());
+        }
+
     }
 }

@@ -1,8 +1,6 @@
 package readDB;
 
-import encryption.DecryptionFile;
-import encryption.EncryptionFile;
-import exceptions.RunTimeException;
+import exceptions.SqlQueryException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DisplayClassifications {
-    public static void display(Connection connection) throws RunTimeException {
+    public static void display(Connection connection) throws SqlQueryException {
 
        try
        {
@@ -22,7 +20,7 @@ public class DisplayClassifications {
                System.out.println(result.getString("name")+"    "+result.getString("formattedContext"));
            }
        }catch (SQLException e) {
-           throw new RunTimeException("Fail Get Backup Info Query ");
+           throw new SqlQueryException("Get Backup Info Query Failed");
        }
 
     }

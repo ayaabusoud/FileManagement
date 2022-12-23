@@ -1,7 +1,6 @@
 package readDB;
 
-import encryption.EncryptionFile;
-import exceptions.RunTimeException;
+import exceptions.SqlQueryException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CheckClassificationExistences {
-    public static boolean isExist(Connection connection , String fileName) throws RunTimeException {
+    public static boolean isExist(Connection connection , String fileName) throws SqlQueryException {
         try
         {
             String query ="SELECT name FROM classification WHERE name = ? ";
@@ -22,7 +21,7 @@ public class CheckClassificationExistences {
             return false;
         }
         catch (SQLException e) {
-            throw new RunTimeException("Check Classification Existences Query");
+            throw new SqlQueryException("Check Classification Existences Query filed");
         }
 
     }

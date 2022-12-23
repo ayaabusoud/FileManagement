@@ -1,6 +1,6 @@
 package readDB;
 
-import exceptions.RunTimeException;
+import exceptions.SqlQueryException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class GetClassificationContent {
-    public static String[] get(Connection connection, String className)throws RunTimeException {
+    public static String[] get(Connection connection, String className)throws SqlQueryException {
         String []context = new String[2];
         String query ="SELECT * FROM classification WHERE name = ?";
         try
@@ -22,7 +22,7 @@ public class GetClassificationContent {
             return context;
         }
         catch (SQLException e) {
-            throw new RunTimeException("Get Classification Content Query ");
+            throw new SqlQueryException("Get Classification Content Query ");
         }
     }
 }
