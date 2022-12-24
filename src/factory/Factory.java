@@ -9,8 +9,8 @@ import operations.read.Reading;
 import operations.rollback.Rollback;
 import users.UserTypes;
 
-public class Factory {
-    public static Operation createUserFunctionality(UserTypes type){
+public class Factory implements IFactory{
+    public  Operation createUserFunctionality(UserTypes type){
         Operation obj = new Operation();
         if (type.equals(UserTypes.Admin)){
             obj.setImportFile(new Import());
