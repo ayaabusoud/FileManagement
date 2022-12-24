@@ -1,27 +1,28 @@
 package controller;
 
-import readDB.ExportFiles;
-import operations.read.ReadFile;
+import readDB.ReadFilesByClassification;
 import variables.Variables;
-import writeDB.Delete;
+import writeDB.DeleteFilesByClassification;
+//import writeDB.DeleteFilesByClassification;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class ClassificationController {
-    public static void control(Connection connection, String[] fileAttribute, String operationType) {
+    public static void control(Connection connection,String[] fileAttribute, String operationType){
         try {
-            if (operationType.equalsIgnoreCase(Variables.READ_FILES)) {
-                ReadFile.readFiles(connection,fileAttribute,Variables.BY_CLASSIFICATION);
-            } else if (operationType.equalsIgnoreCase(Variables.DELETE_FILES)) {
-//                DeleteFile.deleteFile(connection, fileAttribute, Variables.BY_CLASSIFICATION);
-                Delete.AYAS(connection, fileAttribute, Variables.BY_CLASSIFICATION);
-            }
-            else if (operationType.equalsIgnoreCase(Variables.EXPORT_FILES)) {
-                ExportFiles.export(connection, fileAttribute,Variables.BY_CLASSIFICATION);
-            }
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
+
+
+        if (operationType.equalsIgnoreCase(Variables.READ_FILES)){
+                ReadFilesByClassification.readFiles(connection,fileAttribute);
+
+        } else if (operationType.equalsIgnoreCase(Variables.DELETE_FILES)) {
+
+                DeleteFilesByClassification.deleteFiles(connection,fileAttribute);
+
         }
+    } catch (SQLException e) {
+        throw new RuntimeException(e);
+    }
     }
 }

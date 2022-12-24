@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class NewClassification {
 
 
-    public static String[] create(Connection connection) {
+    public static String[] create(Connection connection){
         Scanner sc = new Scanner(System.in);
         boolean exit = true;
         int choice ;
@@ -16,7 +16,7 @@ public class NewClassification {
         String fileType = "Any";
         String fileSize = "Any";
         String[] classificationAttributes = new String[4];
- //       String formattedContext = null;
+        String formattedContext = null;
 
 
         classificationAttributes[0] = CheckUniqueClassificationName.checkName(connection);
