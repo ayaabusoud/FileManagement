@@ -2,6 +2,7 @@ package authnetication;
 
 import exceptions.SqlQueryException;
 import factory.Factory;
+import factory.IFactory;
 import operations.operation.IOperation;
 import readDB.CheckExistence;
 import users.User;
@@ -14,6 +15,7 @@ import java.util.Scanner;
 
 public class Signup implements IAuthentication{
     public IOperation authUser(Connection connection) {
+        IFactory factory = new Factory();
         User reader = new User();
         String username="";
         String password="";
@@ -38,7 +40,7 @@ public class Signup implements IAuthentication{
         } catch (SqlQueryException e) {
         System.out.println(e.getMessage());
         }
-        return  Factory.createUserFunctionality(UserTypes.Reader);
+        return  factory.createUserFunctionality(UserTypes.Reader);
     }
 
 }
