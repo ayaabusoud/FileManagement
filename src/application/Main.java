@@ -2,13 +2,19 @@ package application;
 
 import database.IDatabase;
 import database.SqlDatabase;
-import exceptions.*;
+import exceptions.NotAllowedOperationException;
+import exceptions.NotInteger;
+import exceptions.NotIntegerException;
+import exceptions.connectionMySqlException;
+import factory.Factory;
+import file.FileInfo;
+import file.FileNameAndType;
 import login.Login;
 import menu.AuthenticationMenu;
-import menu.NotInteger;
 import menu.OperationMenu;
 import operations.operation.IOperation;
 import signup.Signup;
+import users.UserTypes;
 import variables.Variables;
 
 import java.sql.Connection;
@@ -17,7 +23,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws Exception {
         IDatabase sqlDatabase = SqlDatabase.createInstance();
         Connection connection = null;
         Scanner sc = new Scanner(System.in);
@@ -29,7 +35,7 @@ public class Main {
 
         try {
              connection = sqlDatabase.connectDB();
-        }catch (ConnectionMySqlException e){
+        }catch (connectionMySqlException e){
             System.err.println(e.getMessage());
             System.exit(0);
         }
@@ -41,11 +47,7 @@ public class Main {
                authChoice = NotInteger.scanInteger(authChoice);
             }catch (NotIntegerException e) {
             System.err.println(e.getMessage());
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException ex) {
-                    throw new RuntimeException(ex);
-                }
+            Thread.sleep(100);
                 continue;
             }
             switch (authChoice){
@@ -78,21 +80,13 @@ public class Main {
                 userMenuChoice = NotInteger.scanInteger(authChoice);
             }catch (NotIntegerException e) {
                 System.err.println(e.getMessage());
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException ex) {
-                    throw new RuntimeException(ex);
-                }
+                Thread.sleep(100);
                 continue;
             }
             System.out.println("----------------------");
             switch (userMenuChoice){
                 case 0:
-                    try {
-                        sqlDatabase.closeDB(connection);
-                    } catch (ConnectionMySqlException e) {
-                       System.err.println(e.getMessage());
-                    }
+                    sqlDatabase.closeDB(connection);
                     displayOperationMenu =false;
                     break;
                 case 1:
@@ -111,14 +105,19 @@ public class Main {
                     break;
                 case 3:
                     try {
-                        functionality.rollBack(connection);
+                        System.out.print("Enter file.type: ");
+                        String fileAndType = sc.next();
+                        functionality.rollBack(connection,fileAndType);
                     }catch (NotAllowedOperationException e){
                         System.out.println(e.getMessage());
                     }
                     break;
                 case 4:
                     try {
-                        functionality.exportFile(connection);
+                        System.out.print("Enter file.type: ");
+                        String file = sc.next();
+                        FileInfo newFile = FileNameAndType.splitNameAndType(file);
+                        functionality.exportFile(connection,newFile);
                     }catch (NotAllowedOperationException e){
                         System.out.println(e.getMessage());
                     }

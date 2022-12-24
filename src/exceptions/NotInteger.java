@@ -1,12 +1,10 @@
-package menu;
-
-import exceptions.NotIntegerException;
+package exceptions;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class NotInteger {
-    public static int scanInteger(int authChoice)throws NotIntegerException {
+    public static int scanInteger(int authChoice){
         Scanner sc = new Scanner(System.in);
         try {
             authChoice = sc.nextInt();

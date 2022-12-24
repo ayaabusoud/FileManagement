@@ -1,5 +1,5 @@
 package database;
-import exceptions.ConnectionMySqlException;
+import exceptions.connectionMySqlException;
 
 import java.sql.*;
 
@@ -19,7 +19,7 @@ public class SqlDatabase implements IDatabase {
             instance = new SqlDatabase();
         }return instance;
     }
-    public  Connection connectDB() throws ConnectionMySqlException {
+    public  Connection connectDB() throws connectionMySqlException {
 
             if(connectionStatus == true){
                 System.out.println("it's already connected");
@@ -31,19 +31,18 @@ public class SqlDatabase implements IDatabase {
             System.out.println("connected to DB");
             }
             catch (Exception e){
-            throw new ConnectionMySqlException("Not able to connect to the DB, try again later.");
+            throw new connectionMySqlException("Not able to connect to the DB, try again later.");
             }
         }
         return connection;
     }
 
 
-    public void closeDB(Connection connection) throws ConnectionMySqlException {
-        try {
-            connectionStatus = false;
-            connection.close();
-        } catch (SQLException e) {
-            throw new ConnectionMySqlException("Close connection failed");
+    public void closeDB(Connection connection) throws SQLException {
+        if(connection == null){
+            //throw null exception
         }
+        connectionStatus = false;
+        connection.close();
     }
 }

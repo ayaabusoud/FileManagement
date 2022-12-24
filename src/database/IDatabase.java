@@ -1,11 +1,11 @@
 package database;
 
-import exceptions.ConnectionMySqlException;
+import exceptions.connectionMySqlException;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public interface IDatabase {
-    public Connection connectDB() throws ConnectionMySqlException;
-    public void closeDB(Connection connection) throws ConnectionMySqlException;
+    public Connection connectDB() throws connectionMySqlException;
+    public void closeDB(Connection connection) throws SQLException;
 }
