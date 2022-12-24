@@ -1,7 +1,8 @@
 package encryption;
 
-public class EncryptionFile {
-    public static String encryptFile(String name){
+public class EncryptionFile implements IEncrAndDecrption {
+    @Override
+    public String IncAndDec(String name) {
         return name+"_";
     }
 }

@@ -1,6 +1,7 @@
 package writeDB;
 
 import encryption.EncryptionFile;
+import encryption.IEncrAndDecrption;
 import exceptions.SqlQueryException;
 import file.FileInformation;
 
@@ -13,9 +14,10 @@ public abstract class BackupDeletion {
     public static void deleteFile(Connection connection, FileInformation file ) throws SqlQueryException {
         String QUERY = "DELETE FROM backup WHERE name = ? AND type = ? AND version = ?";
         PreparedStatement preparedStmt = null;
+        IEncrAndDecrption EncryptionFile = new EncryptionFile();
         try {
             preparedStmt = connection.prepareStatement(QUERY);
-            preparedStmt.setString(1, EncryptionFile.encryptFile(file.getName()));
+            preparedStmt.setString(1, EncryptionFile.IncAndDec(file.getName()));
             preparedStmt.setString(2, file.getType());
             preparedStmt.setInt(3, file.getVersion());
             preparedStmt.execute();

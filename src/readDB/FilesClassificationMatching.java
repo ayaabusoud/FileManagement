@@ -1,6 +1,7 @@
 package readDB;
 
 import encryption.EncryptionFile;
+import encryption.IEncrAndDecrption;
 import exceptions.SqlQueryException;
 import variables.Variables;
 
@@ -11,6 +12,7 @@ import java.sql.SQLException;
 
 public abstract class FilesClassificationMatching {
     public static ResultSet getFiles(Connection connection, String[]context) throws SqlQueryException {
+        IEncrAndDecrption EncryptionFile = new EncryptionFile();
         ResultSet result = null;
         String nameQuery = Variables.EQUALS;
         String typeQuery = Variables.EQUALS;
@@ -28,7 +30,7 @@ public abstract class FilesClassificationMatching {
             String query = "SELECT * FROM file WHERE name" + nameQuery + "? AND type" + typeQuery + "? " +
                     "AND size" + sizeQuery + "?" + " AND lastVersion = 1";
             PreparedStatement preparedStmt = connection.prepareStatement(query);
-            preparedStmt.setString(1, EncryptionFile.encryptFile(context[0]));
+            preparedStmt.setString(1, EncryptionFile.IncAndDec(context[0]));
             preparedStmt.setString(2, context[1]);
             preparedStmt.setString(3, context[2]);
             result = preparedStmt.executeQuery();
