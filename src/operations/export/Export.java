@@ -1,35 +1,23 @@
 package operations.export;
 
-import encryption.EncryptionFile;
-import exceptions.FileIsAlreadyExist;
-import file.FileInfo;
-import readDB.CheckFileExistences;
-import readDB.ExportFiles;
+import classification.ChooseClassification;
+import exceptions.NotAllowedOperationException;
+import exceptions.SqlQueryException;
 import variables.Variables;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Scanner;
 
 public class Export implements IExport {
 
     @Override
-    public void export(Connection connection , FileInfo file ){
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Enter folder name: ");
-        String folder = sc.next();
-
-        File newFolder = new File("/"+folder);
-        boolean bool = newFolder.mkdir();
+    public void export(Connection connection){
         try {
-            ExportFiles.export(connection,file,folder);
-        }catch (FileIsAlreadyExist e){
+            ChooseClassification.classificationChoice(Variables.EXPORT_FILES,connection);
+        }catch (NotAllowedOperationException e){
             System.err.println(e.getMessage());
         }
-
 
     }
 }

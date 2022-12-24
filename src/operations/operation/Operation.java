@@ -1,14 +1,17 @@
 package operations.operation;
 
+import classification.ChooseClassification;
 import exceptions.IncorrectFilePathException;
 import exceptions.NotAllowedOperationException;
-import file.FileInfo;
+import exceptions.SqlQueryException;
 import operations.createClassification.ICreateClassification;
 import operations.delete.IDelete;
 import operations.export.IExport;
 import operations.importOperation.IImport;
 import operations.read.IRead;
+import operations.read.Read;
 import operations.rollback.IRollback;
+import variables.Variables;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -20,9 +23,6 @@ public class Operation implements IOperation {
     private IImport importFile;
     private IRollback rollback;
     private IRead read;
-
-
-
     private ICreateClassification classification;
 
     public Operation(){
@@ -38,51 +38,49 @@ public class Operation implements IOperation {
     public void importFiles(Connection connection) throws NotAllowedOperationException{
     if(importFile == null){
       throw new NotAllowedOperationException("This operation is not allowed");
-     }try {
-            importFile.importFile(connection);
-        }catch (IncorrectFilePathException e){
+     }
+    try {
+          importFile.importFile(connection);
+        }
+    catch (IncorrectFilePathException e){
         System.err.println(e.getMessage());
         }
 
     }
     @Override
-    public void deleteFiles(Connection connection) throws SQLException, NotAllowedOperationException {
+    public void deleteFiles(Connection connection) throws NotAllowedOperationException{
         if(delete == null){
             throw new NotAllowedOperationException("This operation is not allowed");
         }
-        delete.delete(connection);
+            delete.delete(connection);
     }
     @Override
-    public void readFiles(Connection connection) throws SQLException, NotAllowedOperationException {
+    public void readFiles(Connection connection) throws NotAllowedOperationException {
         if(read == null){
             throw new NotAllowedOperationException("This operation is not allowed");
         }
         read.read(connection);
     }
     @Override
-    public void exportFile(Connection connection , FileInfo nameOfFile) throws NotAllowedOperationException{
+    public void exportFile(Connection connection ) throws NotAllowedOperationException{
         if(export == null){
             throw new NotAllowedOperationException("This operation is not allowed");
         }
-        try {
-            export.export(connection , nameOfFile);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+            export.export(connection);
     }
     @Override
-    public void rollBack(Connection connection,String path) throws SQLException, IOException, NotAllowedOperationException{
+    public void rollBack(Connection connection) throws NotAllowedOperationException{
         if(rollback == null){
             throw new NotAllowedOperationException("This operation is not allowed");
         }
-        rollback.rollbackVersion(connection,path);
+            rollback.rollbackVersion(connection);
     }
     @Override
-    public void createClassification(Connection connection) throws SQLException, NotAllowedOperationException {
+    public void createClassification(Connection connection) throws NotAllowedOperationException {
         if(classification == null){
             throw new NotAllowedOperationException("This operation is not allowed");
         }
-        classification.create(connection);
+            classification.create(connection);
     }
 
     public IDelete getDelete() {
