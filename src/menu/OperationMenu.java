@@ -1,6 +1,6 @@
 package menu;
 
-public class OperationMenu {
+public abstract class OperationMenu {
     public static void readerMenu(){
         System.out.println("-----menu-----");
         System.out.println("0.Log out");

@@ -8,12 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class GetFilesByAttributes {
+public abstract class GetFilesByAttributes {
     public static ResultSet getFiles(Connection connection, String[]fileAttribute) throws SqlQueryException {
         ResultSet result =null;
-//               if(fileAttribute[0].equals("name")){
-//           DecryptionFile.decryption(fileAttribute[1])  ;
-//       }
         try {
             String query ="SELECT * FROM file WHERE "+fileAttribute[0]+" = ? AND lastVersion = 1";
             PreparedStatement preparedStmt = connection.prepareStatement(query);

@@ -3,13 +3,13 @@ package operations.importOperation;
 import exceptions.FileSizeException;
 import exceptions.IncorrectFilePathException;
 import exceptions.SqlQueryException;
-import file.FileInfo;
+import file.FileInformation;
 import file.FileNameAndType;
-import readDB.CheckFileExistences;
+import readDB.FileExistences;
 import variables.Variables;
 import versionControl.DefaultVersion;
 import versionControl.OverwriteVersion;
-import writeDB.AddFile;
+import writeDB.FileAddition;
 
 import java.io.*;
 import java.sql.Connection;
@@ -20,7 +20,6 @@ public class Import implements IImport {
     @Override
     public void importFile(Connection connection) throws IncorrectFilePathException {
         Scanner sc = new Scanner(System.in);
-        boolean filePathLoop = true;
         String filePath ="";
         InputStream inputStream = null;
 
@@ -36,11 +35,11 @@ public class Import implements IImport {
                 throw new RuntimeException(ex);
             }
 
-        FileInfo newFile = FileNameAndType.splitNameAndType(filePath);
+        FileInformation newFile = FileNameAndType.splitNameAndType(filePath);
 
         try {
-            if (!CheckFileExistences.isExist(connection, Variables.FILE_TABLE, newFile)) {
-                AddFile.addNewFile(connection,Variables.FILE_TABLE,inputStream, newFile);
+            if (!FileExistences.isExist(connection, Variables.FILE_TABLE, newFile)) {
+                FileAddition.addNewFile(connection,Variables.FILE_TABLE,inputStream, newFile);
             }
             else {
                 if(Variables.AdminUser)
@@ -48,13 +47,13 @@ public class Import implements IImport {
                     System.out.print("Do you want to disable the default version? (yes/no) ");
                     String defaultVersion = sc.next();
                     if(defaultVersion.equalsIgnoreCase("no")){
-                        DefaultVersion.defaultVersion(connection,Variables.FILE_TABLE,inputStream,newFile);
+                        DefaultVersion.addDefaultVersion(connection,Variables.FILE_TABLE,inputStream,newFile);
                     }else if(defaultVersion.equalsIgnoreCase("yes")) {
-                        OverwriteVersion.overwriteFile(connection,inputStream, newFile);
+                        OverwriteVersion.addOverwriteFile(connection,inputStream, newFile);
                     }
                 }
                 else
-                    DefaultVersion.defaultVersion(connection,Variables.FILE_TABLE,inputStream,newFile);
+                    DefaultVersion.addDefaultVersion(connection,Variables.FILE_TABLE,inputStream,newFile);
             }
         }
         catch (SqlQueryException e) {

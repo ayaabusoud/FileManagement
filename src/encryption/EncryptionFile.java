@@ -1,7 +1,7 @@
 package encryption;
 
 public class EncryptionFile {
-    public static String encryption(String name){
+    public static String encryptFile(String name){
         return name+"_";
     }
 }

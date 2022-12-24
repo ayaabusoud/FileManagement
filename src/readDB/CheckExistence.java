@@ -7,7 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CheckExistence {
+public abstract class CheckExistence {
     public static boolean isExists(Connection connection,String table, String username) throws SqlQueryException {
         try {
             String query = "SELECT * FROM "+table+" WHERE name = ?";
