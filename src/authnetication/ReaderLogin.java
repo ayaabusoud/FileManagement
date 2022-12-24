@@ -2,6 +2,7 @@ package authnetication;
 
 import exceptions.SqlQueryException;
 import factory.Factory;
+import factory.IFactory;
 import operations.operation.IOperation;
 import readDB.UserPassword;
 import users.UserTypes;
@@ -14,6 +15,7 @@ import static variables.Variables.readerUser;
 
 public abstract class ReaderLogin{
     public static IOperation authUser(Connection connection){
+        IFactory factory =new Factory();
         IOperation userAccess = null;
         Scanner sc = new Scanner(System.in);
         boolean notValid = true;
@@ -30,7 +32,7 @@ public abstract class ReaderLogin{
             }
             boolean passwordIsValid = checkUserPassword(password, hashedPassword);
             if (passwordIsValid) {
-                userAccess = Factory.createUserFunctionality(UserTypes.Reader);
+                userAccess = factory.createUserFunctionality(UserTypes.Reader);
                 readerUser = true;
                 notValid =false;
             }else {
