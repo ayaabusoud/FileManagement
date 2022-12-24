@@ -10,8 +10,8 @@ import java.sql.SQLException;
 public class AddClassification {
     public static void addNewClassification(Connection connection, String[] classificationAttributes) throws SqlQueryException{
         String query = "INSERT INTO classification (name,context,formattedContext) values (?,?,?)";
-        try
-        {
+        try {
+
             PreparedStatement preparedStmt = connection.prepareStatement(query);
             preparedStmt.setString (1,  classificationAttributes[0]);
             preparedStmt.setString (2, classificationAttributes[1]);

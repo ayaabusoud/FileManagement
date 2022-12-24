@@ -22,6 +22,7 @@ public class Variables {
     public static final String  EQUALS = " = " ;
     public static final String  NOT_EQUALS = " != " ;
     public static final String  BY_CLASSIFICATION = "classification" ;
+    public static final String LASTVERSION  =  "lastVersion" ;
     public static final String  BY_ATTRIBUTES = "attributes" ;
     public static boolean AdminUser = false;
     public static boolean StaffUser = false;

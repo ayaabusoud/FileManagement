@@ -9,7 +9,6 @@ import java.sql.SQLException;
 
 public class DisplayClassifications {
     public static void display(Connection connection) throws SqlQueryException {
-
        try
        {
            String query ="SELECT * FROM classification";

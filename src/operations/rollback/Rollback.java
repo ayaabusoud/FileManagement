@@ -27,7 +27,7 @@ public class Rollback implements IRollback {
                 file = GetFileInfo.getInfo(connection, FileNameAndType.splitNameAndType(fileNameAndType));
 
             if (file.getVersionType() == Variables.ONE_VERSION_TYPE) {
-                DeleteLastVersion.deleteFile(connection, file);
+                DeleteLastVersion.deleteFile(connection, file );
             }
             else if (file.getVersionType() == Variables.DEFAULT_VERSION_CONTROL_TYPE) {
                 DeleteLastVersion.deleteFile(connection, file);
@@ -35,8 +35,8 @@ public class Rollback implements IRollback {
             }
             else if (file.getVersionType() == Variables.OVERWRITE_VERSION_CONTROL_TYPE) {
                 FileInfo backupFile = GetBackupInfo.getInfo(connection, file);
-                DeleteBackup.deleteFile(connection, backupFile);
-                DeleteLastVersion.deleteFile(connection, file);
+                DeleteLastVersion.deleteFile(connection, backupFile );
+                DeleteLastVersion.deleteFile(connection, file );
                 if (CheckPreviousFileExistence.previousVersionIsExist(connection, backupFile)) {
                     backupFile.setVersionType(Variables.DEFAULT_VERSION_CONTROL_TYPE);
                 }

@@ -1,10 +1,9 @@
 package controller;
 
-import operations.export.ExportFiles;
+import readDB.ExportFiles;
 import operations.read.ReadFile;
 import variables.Variables;
-import writeDB.DeleteFilesByClassification;
-//import writeDB.DeleteFilesByClassification;
+import writeDB.Delete;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -15,7 +14,8 @@ public class ClassificationController {
             if (operationType.equalsIgnoreCase(Variables.READ_FILES)) {
                 ReadFile.readFiles(connection,fileAttribute,Variables.BY_CLASSIFICATION);
             } else if (operationType.equalsIgnoreCase(Variables.DELETE_FILES)) {
-                DeleteFilesByClassification.deleteFiles(connection, fileAttribute);
+//                DeleteFile.deleteFile(connection, fileAttribute, Variables.BY_CLASSIFICATION);
+                Delete.AYAS(connection, fileAttribute, Variables.BY_CLASSIFICATION);
             }
             else if (operationType.equalsIgnoreCase(Variables.EXPORT_FILES)) {
                 ExportFiles.export(connection, fileAttribute,Variables.BY_CLASSIFICATION);

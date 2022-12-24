@@ -10,7 +10,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CheckFileExistences {
-
     public static boolean isExist(Connection connection, String tableName, FileInfo newFile) throws SqlQueryException {
         String query = "SELECT name FROM " + tableName + " WHERE name = ? and type = ?";
         PreparedStatement preparedStmt = null;

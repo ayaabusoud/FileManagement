@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class AddUser {//
+public class AddUser {
     public static void addNewUser(Connection connection, User newReader) throws SqlQueryException {
         String query = "INSERT INTO user (name,password) values (?,?)";
         try {

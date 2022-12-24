@@ -23,9 +23,6 @@ public class Operation implements IOperation {
     private IImport importFile;
     private IRollback rollback;
     private IRead read;
-
-
-
     private ICreateClassification classification;
 
     public Operation(){

@@ -9,11 +9,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class DeleteLastVersion {
-
     final static String QUERY = "DELETE FROM file WHERE name = ? AND type = ? AND lastVersion = 1";
 
     public static void deleteFile(Connection connection, FileInfo file) throws SqlQueryException {
-
         PreparedStatement preparedStmt = null;
         try {
             preparedStmt = connection.prepareStatement(QUERY);

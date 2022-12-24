@@ -10,7 +10,6 @@ import java.sql.SQLException;
 
 public class UpdateLastVersion {
 
-
     public static void updateToZero(Connection connection,String tableName, FileInfo newFile) throws SqlQueryException {
         String QUERY ="Update "+ tableName +" SET lastVersion = 0 WHERE name = ? AND type = ?";
         try {
