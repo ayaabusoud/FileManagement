@@ -1,8 +1,6 @@
 package menu;
 
-import readDB.DisplayClassifications;
-
-public class ClassificationMenu {
+public abstract class ClassificationMenu {
     public static void classificationMenu(){
         System.out.println("1.File name");
         System.out.println("2.File Type");

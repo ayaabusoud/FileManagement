@@ -1,14 +1,15 @@
 package application;
 
+import authnetication.IAuthentication;
 import database.IDatabase;
 import database.SqlDatabase;
 import exceptions.*;
-import login.Login;
+import authnetication.Login;
 import menu.AuthenticationMenu;
-import menu.NotInteger;
+import menu.NotIntegerInput;
 import menu.OperationMenu;
 import operations.operation.IOperation;
-import signup.Signup;
+import authnetication.Signup;
 import variables.Variables;
 
 import java.sql.Connection;
@@ -26,6 +27,7 @@ public class Main {
         int userMenuChoice;
         IOperation functionality = null;
         int authChoice = 0;
+        IAuthentication authUser = null;
 
         try {
              connection = sqlDatabase.connectDB();
@@ -38,7 +40,7 @@ public class Main {
         do {
             try {
                 AuthenticationMenu.AuthMenu();
-               authChoice = NotInteger.scanInteger(authChoice);
+               authChoice = NotIntegerInput.scanInteger(authChoice);
             }catch (NotIntegerException e) {
             System.err.println(e.getMessage());
                 try {
@@ -50,13 +52,15 @@ public class Main {
             }
             switch (authChoice){
                 case 1:
-                    functionality = Signup.signupUser(connection);
+                    authUser = new Signup();
+                    functionality = authUser.authUser(connection);
                     Variables.readerUser = true;
                     displayMenu =false;
                     break;
                 case 2:
                     displayMenu =false;
-                    functionality= Login.loginUser(connection);
+                    authUser = new Login();
+                    functionality = authUser.authUser(connection);
                     break;
                 default:
                     System.out.println("invalid input, try again");
@@ -75,7 +79,7 @@ public class Main {
 
             try {
                 System.out.print("choose Operation number: ");
-                userMenuChoice = NotInteger.scanInteger(authChoice);
+                userMenuChoice = NotIntegerInput.scanInteger(authChoice);
             }catch (NotIntegerException e) {
                 System.err.println(e.getMessage());
                 try {

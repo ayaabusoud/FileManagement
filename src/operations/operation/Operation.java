@@ -1,28 +1,21 @@
 package operations.operation;
 
-import classification.ChooseClassification;
 import exceptions.IncorrectFilePathException;
 import exceptions.NotAllowedOperationException;
-import exceptions.SqlQueryException;
 import operations.createClassification.ICreateClassification;
-import operations.delete.IDelete;
+import operations.delete.IDeletion;
 import operations.export.IExport;
 import operations.importOperation.IImport;
-import operations.read.IRead;
-import operations.read.Read;
+import operations.read.IReading;
 import operations.rollback.IRollback;
-import variables.Variables;
-
-import java.io.IOException;
 import java.sql.Connection;
-import java.sql.SQLException;
 
 public class Operation implements IOperation {
-    private IDelete delete;
+    private IDeletion delete;
     private IExport export;
     private IImport importFile;
     private IRollback rollback;
-    private IRead read;
+    private IReading read;
     private ICreateClassification classification;
 
     public Operation(){
@@ -83,11 +76,11 @@ public class Operation implements IOperation {
             classification.create(connection);
     }
 
-    public IDelete getDelete() {
+    public IDeletion getDelete() {
         return delete;
     }
 
-    public void setDelete(IDelete delete) {
+    public void setDelete(IDeletion delete) {
         this.delete = delete;
 
     }
@@ -116,11 +109,11 @@ public class Operation implements IOperation {
         this.rollback = rollback;
     }
 
-    public IRead getRead() {
+    public IReading getRead() {
         return read;
     }
 
-    public void setRead(IRead read) {
+    public void setRead(IReading read) {
         this.read = read;
     }
 

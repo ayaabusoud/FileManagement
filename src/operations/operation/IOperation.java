@@ -1,12 +1,8 @@
 package operations.operation;
 
-import exceptions.NotAllowedOperationException;
-import file.FileInfo;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.sql.Connection;
-import java.sql.SQLException;
+
 
 public interface IOperation {
 
