@@ -1,9 +1,9 @@
 package file;
 
-public class FileNameAndType {
-    public static FileInfo splitNameAndType(String filePath){
+public abstract class FileNameAndType {
+    public static FileInformation splitNameAndType(String filePath){
         String[] nameAndType = null;
-        FileInfo file = new FileInfo();
+        FileInformation file = new FileInformation();
         if (!filePath.contains("/")){
             nameAndType = filePath.split("\\.");
 
