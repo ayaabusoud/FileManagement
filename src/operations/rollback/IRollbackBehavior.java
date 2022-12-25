@@ -1,9 +1,7 @@
 package operations.rollback;
 
-import java.io.IOException;
 import java.sql.Connection;
-import java.sql.SQLException;
 
-public interface IRollback {
+public interface IRollbackBehavior {
     public void rollbackVersion(Connection connection);
 }

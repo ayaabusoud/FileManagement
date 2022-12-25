@@ -1,8 +1,8 @@
 package encryption;
 
-public class DecryptionFile implements IEncrAndDecrption {
+public class DecryptionFile implements IEncryptionAndDecryption {
     @Override
-    public String IncAndDec(String fileName) {
+    public String encryptAndDecrypt(String fileName) {
         return fileName.substring(0,fileName.length()-1);
     }
 }

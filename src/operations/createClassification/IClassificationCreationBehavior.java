@@ -1,8 +1,7 @@
 package operations.createClassification;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
-public interface ICreateClassification {
+public interface IClassificationCreationBehavior {
     public void create(Connection connection);
 }

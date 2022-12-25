@@ -1,16 +1,16 @@
 package operations.createClassification;
 
 import exceptions.SqlQueryException;
-import writeDB.ClassificationAddtion;
+import writeDB.ClassificationAddition;
 
 import java.sql.Connection;
 
-public class ClassificationCreation implements ICreateClassification{
+public class ClassificationCreation implements IClassificationCreationBehavior {
     public void create(Connection connection){
         try {
             String[] classificationAttributes = NewClassification.createClassification(connection);
 
-                ClassificationAddtion.addNewClassification(connection,classificationAttributes);
+                ClassificationAddition.addNewClassification(connection,classificationAttributes);
         } catch (SqlQueryException e) {
             System.err.println(e.getMessage());
         }

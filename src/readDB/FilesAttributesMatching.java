@@ -1,14 +1,12 @@
 package readDB;
 
-import encryption.DecryptionFile;
-import encryption.EncryptionFile;
 import exceptions.SqlQueryException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public abstract class GetFilesByAttributes {
+public abstract class FilesAttributesMatching {
     public static ResultSet getFiles(Connection connection, String[]fileAttribute) throws SqlQueryException {
         ResultSet result =null;
         try {

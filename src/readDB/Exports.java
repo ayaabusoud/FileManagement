@@ -20,13 +20,13 @@ public abstract class Exports {
         if(exportType.equals(Variables.BY_CLASSIFICATION)){
             result = FilesClassificationMatching.getFiles(connection,fileAttribute);
         }else {
-            result = GetFilesByAttributes.getFiles(connection,fileAttribute);
+            result = FilesAttributesMatching.getFiles(connection,fileAttribute);
         }
 
         System.out.println("Enter folder name: ");
         String folderPath = sc.next();
         File newFolder = new File("/"+folderPath);
-        boolean createFolder = newFolder.mkdir();
+        newFolder.mkdir();
 
     try {
     while (result.next()){

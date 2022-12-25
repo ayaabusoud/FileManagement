@@ -1,11 +1,11 @@
 package authnetication;
 
 import exceptions.SqlQueryException;
-import factory.Factory;
+import factory.OperationFactory;
 import factory.IFactory;
-import operations.operation.IOperation;
-import readDB.CheckExistence;
-import users.User;
+import users.IUser;
+import readDB.ExistenceChecking;
+import users.UserInformation;
 import users.UserTypes;
 import variables.Variables;
 import writeDB.UserAddition;
@@ -14,9 +14,9 @@ import java.sql.Connection;
 import java.util.Scanner;
 
 public class Signup implements IAuthentication{
-    public IOperation authUser(Connection connection) {
-        IFactory factory = new Factory();
-        User reader = new User();
+    public IUser authUser(Connection connection) {
+        IFactory factory = new OperationFactory();
+        UserInformation reader = new UserInformation();
         String username="";
         String password="";
         Scanner sc = new Scanner(System.in);
@@ -25,7 +25,7 @@ public class Signup implements IAuthentication{
         while (!usernameIsValid){
         System.out.print("Enter username: ");
         username = sc.next();
-        if(CheckExistence.isExists(connection, Variables.USER_TABLE,username)){
+        if(ExistenceChecking.isExists(connection, Variables.USER_TABLE,username)){
             System.out.println("The username is exists, please choose another one: ");
         }else {
             usernameIsValid = true;
@@ -40,7 +40,7 @@ public class Signup implements IAuthentication{
         } catch (SqlQueryException e) {
         System.out.println(e.getMessage());
         }
-        return  factory.createUserFunctionality(UserTypes.Reader);
+        return  factory.create(UserTypes.Reader);
     }
 
 }

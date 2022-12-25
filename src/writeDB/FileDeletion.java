@@ -1,7 +1,7 @@
 package writeDB;
 
 import exceptions.SqlQueryException;
-import readDB.GetFilesByAttributes;
+import readDB.FilesAttributesMatching;
 import readDB.FilesClassificationMatching;
 import variables.Variables;
 
@@ -18,7 +18,7 @@ public abstract class FileDeletion {
             if (type.equals(Variables.BY_CLASSIFICATION)) {
                 result = FilesClassificationMatching.getFiles(connection, fileAttributes);
             } else {
-                result = GetFilesByAttributes.getFiles(connection, fileAttributes);
+                result = FilesAttributesMatching.getFiles(connection, fileAttributes);
             }
             while (result.next()) {
                 String query ="DELETE FROM file WHERE name = ? AND type = ? " ;

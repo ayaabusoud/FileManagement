@@ -6,7 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public abstract class ClassificationAddtion {
+public abstract class ClassificationAddition {
     public static void addNewClassification(Connection connection, String[] classificationAttributes) throws SqlQueryException{
         String query = "INSERT INTO classification (name,context,formattedContext) values (?,?,?)";
         try {

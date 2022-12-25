@@ -2,7 +2,7 @@ package operations.createClassification;
 
 import exceptions.SqlQueryException;
 import menu.ClassificationMenu;
-import readDB.CheckExistence;
+import readDB.ExistenceChecking;
 import variables.Variables;
 
 import java.sql.Connection;
@@ -26,7 +26,7 @@ public abstract class NewClassification {
             System.out.print("Enter the classification name: ");
             classificationAttributes[0] = sc.next();
             try {
-                loop = CheckExistence.isExists(connection, Variables.CLASSIFICATION_TABLE, classificationAttributes[0]);
+                loop = ExistenceChecking.isExists(connection, Variables.CLASSIFICATION_TABLE, classificationAttributes[0]);
             }  catch (SqlQueryException e) {
                 System.err.println(e.getMessage());
             }

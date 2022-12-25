@@ -1,9 +1,9 @@
 package authnetication;
 
-import operations.operation.IOperation;
+import users.IUser;
 
 import java.sql.Connection;
 
 public interface IAuthentication {
-    public IOperation authUser(Connection connection);
+    public IUser authUser(Connection connection);
 }
