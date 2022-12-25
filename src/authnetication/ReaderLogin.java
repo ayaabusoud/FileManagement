@@ -33,12 +33,10 @@ public abstract class ReaderLogin{
             logger.debug("User Enter his name and password" + username);
             try {
                 hashedPassword = UserPassword.getPassword(connection,username);
-                logger.debug("Call the function getPassword, to retrieve the password from the data base");
             } catch (SqlQueryException e) {
                 System.err.println(e.getMessage());
             }
             boolean passwordIsValid = checkUserPassword(password, hashedPassword);
-            logger.debug("Verify that the password matches");
 
             if (passwordIsValid) {
                 userAccess = factory.create(UserTypes.Reader);
@@ -50,7 +48,7 @@ public abstract class ReaderLogin{
                 System.out.println("Invalid name or password, try again..");
             }
         }while (notValid);
-        logger.debug("Close the authUser function");
+        logger.debug("exit the authUser function");
         return userAccess;
     }
 }

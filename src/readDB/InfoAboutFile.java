@@ -14,18 +14,18 @@ public abstract class InfoAboutFile {
     private static final Logger logger = LogManager.getLogger(InfoAboutFile.class);
 
     public static FileInformation getInfo(FileInformation file, ResultSet result) throws SqlQueryException {
-        logger.debug("Enter to getInfo with args => " + file + result);
+        logger.info("Enter to getInfo function ");
         IEncryptionAndDecryption decryption = new DecryptionFile() ;
         try {
         if (result.next()) {
-           file.setName(decryption.encryptAndDecrypt(result.getString("name")));
+            file.setName(decryption.encryptAndDecrypt(result.getString("name")));
             file.setType(result.getString("type"));
             file.setContext(result.getBlob("context"));
             file.setVersion(result.getInt("version"));
             file.setSize(result.getString("size"));
             file.setVersionType(result.getInt("versionType"));
         }
-            logger.debug("InfoAboutFile Exited");
+            logger.info("InfoAboutFile Exited");
     }catch (SQLException e) {
             throw new SqlQueryException("failed to get file data");
         }

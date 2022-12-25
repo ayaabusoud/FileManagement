@@ -56,5 +56,8 @@ All users can read files, by file name, file type, size or custom category, base
    Our exceptions :
    NotIntegerException, SqlQueryException, NotAllowedOperationException, IncorrectFilePathException, FileSizeException, FileIsAlreadyExist, ConnectionMySqlException
 
-### Scalable
+### Scalability
    We give each component a single, clearly defined purpose, so we route the incoming requests to different components according to its type. This makes sure that no single component becomes the point of all the traffic and so the workload is distributed uniformly.
+
+### Debugging/Accountability
+   We used log4j to create debug and info logger in all classes for each action and store the logs in logger.log file.

@@ -35,9 +35,6 @@ public class OperationFactory implements IFactory{
         else if(type.equals(UserTypes.Reader)){
             obj.setRead(new Reading());
         }
-        else {
-            logger.error("Failed on choice option (admin, staff, reader)");
-        }
         return obj;
     }
 }

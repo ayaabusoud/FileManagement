@@ -10,9 +10,7 @@ public class DecryptionFile implements IEncryptionAndDecryption {
 
     @Override
     public String encryptAndDecrypt(String fileName) {
-        logger.debug("enter encryptAndDecrypt function, fileName before decryption: "+fileName);
-        String decryption = fileName.substring(0,fileName.length()-1);
-        logger.debug("fileName after decryption: "+decryption);
-        return decryption;
+        logger.info("enter encryptAndDecrypt function for " + fileName);
+        return fileName.substring(0,fileName.length()-1);
     }
 }

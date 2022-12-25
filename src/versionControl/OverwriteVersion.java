@@ -1,16 +1,14 @@
 package versionControl;
 
-import application.Main;
-import exceptions.FileSizeException;
 import exceptions.SqlQueryException;
 import file.FileInformation;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import readDB.FileInfo;
 import variables.Variables;
-import writeDB.FileAddition;
+import writeDB.BackupFileAddition;
+import writeDB.ZeroLastVersion;
 import writeDB.OverwriteFile;
-import writeDB.LastVersionUpdation;
 
 import java.io.InputStream;
 import java.sql.Connection;
@@ -21,12 +19,12 @@ public abstract class OverwriteVersion {
 
     public static void addOverwriteFile(Connection connection, InputStream inputStream
             , FileInformation newFile) {
-        logger.debug("Enter to addOverwriteFile with args => "+ connection +inputStream + newFile );
+        logger.debug("Enter to addOverwriteFile function " );
         try {
             FileInformation previousFile = FileInfo.getInfo(connection, newFile);
-            LastVersionUpdation.updateToZero(connection, Variables.BACKUP_TABLE, previousFile);
+            ZeroLastVersion.updateToZero(connection, Variables.BACKUP_TABLE, previousFile);
             previousFile.setVersionType(Variables.OVERWRITE_VERSION_CONTROL_TYPE);
-            FileAddition.addNewFile(connection, Variables.BACKUP_TABLE, previousFile);
+            BackupFileAddition.addNewFile(connection, Variables.BACKUP_TABLE, previousFile);
             newFile.setVersion(previousFile.getVersion() + 1);
             OverwriteFile.updateFile(connection, inputStream, newFile);
         } catch (SqlQueryException e) {

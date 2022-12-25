@@ -27,7 +27,8 @@ public abstract class FileReading {
                 result = FilesAttributesMatching.getFiles(connection, fileAttribute);
             }
             while (result.next()) {
-                System.out.println(decryption.encryptAndDecrypt(result.getString("name")) + "." + result.getString("type") + ": ");
+                System.out.println(decryption.encryptAndDecrypt(result.getString("name")) 
+                        + "." + result.getString("type") + ": ");
                 System.out.println(result.getString("context"));
                 System.out.println("----------------");
             }

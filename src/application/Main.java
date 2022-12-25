@@ -16,8 +16,6 @@ import variables.Variables;
 
 import java.sql.Connection;
 import java.util.Scanner;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 
 
 
@@ -25,7 +23,7 @@ import org.apache.log4j.Logger;
 public class Main {
     private static final Logger logger = LogManager.getLogger(Main.class);
     public static void main(String[] args){
-
+        logger.debug("Start the application");
         IDatabase sqlDatabase = SqlDatabase.createInstance();
         Connection connection = null;
         Scanner sc = new Scanner(System.in);
@@ -45,7 +43,7 @@ public class Main {
         System.out.println("Welcome to our File Management Application");
         do {
             try {
-                AuthenticationMenu.AuthMenu();
+               AuthenticationMenu.AuthMenu();
                authChoice = NotIntegerInput.scanInteger(authChoice);
             }catch (NotIntegerException e) {
             System.err.println(e.getMessage());
@@ -86,6 +84,7 @@ public class Main {
             try {
                 System.out.print("choose Operation number: ");
                 userMenuChoice = NotIntegerInput.scanInteger(authChoice);
+                logger.debug("user operation choice: "+userMenuChoice);
             }catch (NotIntegerException e) {
                 System.err.println(e.getMessage());
                 try {

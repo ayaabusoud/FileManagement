@@ -1,11 +1,11 @@
 package operations.importOperation;
 
 import exceptions.FileSizeException;
+import exceptions.IncorrectFileException;
 import exceptions.IncorrectFilePathException;
 import exceptions.SqlQueryException;
 import file.FileInformation;
 import file.FileNameAndType;
-import operations.delete.Deletion;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import readDB.FileExistences;
@@ -61,6 +61,8 @@ public class Import implements IImportBehavior {
                 throw new IncorrectFilePathException("The file path is incorrect");
         }catch (InterruptedException ex) {
                 throw new RuntimeException(ex);
+        }catch (IncorrectFileException e){
+                System.err.println(e.getMessage());
         }
         System.out.println("Successfully added");
     }
