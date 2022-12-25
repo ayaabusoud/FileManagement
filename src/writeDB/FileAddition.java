@@ -6,17 +6,21 @@ import encryption.IEncryptionAndDecryption;
 import exceptions.FileSizeException;
 import exceptions.SqlQueryException;
 import file.FileInformation;
+import operations.read.FileReading;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
 
 public abstract class FileAddition {
-
+    private static final Logger logger = LogManager.getLogger(FileAddition.class);
     public static void addNewFile(Connection connection,String tableName
             , InputStream inputStream, FileInformation newFile) throws SqlQueryException, FileSizeException {
-
-        String query = "INSERT INTO " + tableName + " (name,type,size,context,version,lastVersion,versionType) values (?,?,?,?,?,?,?)";
+        logger.debug("enter addNewFile function");
+        String query = "INSERT INTO " + tableName + " (name,type,size,context,version,lastVersion,versionType)" +
+                " values (?,?,?,?,?,?,?)";
         IEncryptionAndDecryption EncryptionFile = new EncryptionFile();
         try{
             String Size= SizeConversion.convertSize(inputStream) ;
@@ -35,6 +39,7 @@ public abstract class FileAddition {
        }catch (IOException e){
             throw new FileSizeException("Fail in file input or output");
         }
+        logger.debug("exit addNewFile function");
     }
     public static void addNewFile(Connection connection,String tableName
             , FileInformation newFile) throws SqlQueryException{

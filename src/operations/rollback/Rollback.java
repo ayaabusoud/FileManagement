@@ -3,6 +3,9 @@ package operations.rollback;
 import exceptions.SqlQueryException;
 import file.FileInformation;
 import file.FileNameAndType;
+import operations.createClassification.ClassificationCreation;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import readDB.BackupInfo;
 import readDB.FileInfo;
 import readDB.PreviousFileExistence;
@@ -15,10 +18,13 @@ import java.sql.Connection;
 import java.util.Scanner;
 
 public class Rollback implements IRollbackBehavior {
-        public void rollbackVersion(Connection connection){
+    private static final Logger logger = LogManager.getLogger(Rollback.class);
+    public void rollbackVersion(Connection connection){
+            logger.debug("enter rollbackVersion function");
             Scanner sc = new Scanner(System.in);
             System.out.print("Enter file.type: ");
             String fileNameAndType = sc.next();
+            logger.debug("file name.type: "+fileNameAndType);
             FileInformation file = null;
             try {
                 file = FileInfo.getInfo(connection, FileNameAndType.splitNameAndType(fileNameAndType));
@@ -43,5 +49,6 @@ public class Rollback implements IRollbackBehavior {
             } catch (SqlQueryException e) {
                 System.err.println(e.getMessage());
             }
-        }
+            logger.debug("exit rollbackVersion function");
+    }
     }
