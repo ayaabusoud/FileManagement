@@ -2,7 +2,7 @@ package writeDB;
 
 
 import encryption.EncryptionFile;
-import encryption.IEncrAndDecrption;
+import encryption.IEncryptionAndDecryption;
 import exceptions.FileSizeException;
 import exceptions.SqlQueryException;
 import file.FileInformation;
@@ -17,11 +17,11 @@ public abstract class FileAddition {
             , InputStream inputStream, FileInformation newFile) throws SqlQueryException, FileSizeException {
 
         String query = "INSERT INTO " + tableName + " (name,type,size,context,version,lastVersion,versionType) values (?,?,?,?,?,?,?)";
-        IEncrAndDecrption EncryptionFile = new EncryptionFile();
+        IEncryptionAndDecryption EncryptionFile = new EncryptionFile();
         try{
-            String Size= SizeConversion.CSize(inputStream) ;
+            String Size= SizeConversion.convertSize(inputStream) ;
            PreparedStatement preparedStmt = connection.prepareStatement(query);
-           preparedStmt.setString (1,  EncryptionFile.IncAndDec(newFile.getName()));
+           preparedStmt.setString (1,  EncryptionFile.encryptAndDecrypt(newFile.getName()));
            preparedStmt.setString (2, newFile.getType());
            preparedStmt.setString(3, Size);
            preparedStmt.setBlob(4,inputStream);
@@ -40,10 +40,10 @@ public abstract class FileAddition {
             , FileInformation newFile) throws SqlQueryException{
 
         String query = "INSERT INTO " + tableName + " (name,type,size,context,version,lastVersion,versionType) values (?,?,?,?,?,?,?)";
-        IEncrAndDecrption EncryptionFile = new EncryptionFile();
+        IEncryptionAndDecryption EncryptionFile = new EncryptionFile();
         try{
             PreparedStatement preparedStmt = connection.prepareStatement(query);
-            preparedStmt.setString (1,  EncryptionFile.IncAndDec(newFile.getName()));
+            preparedStmt.setString (1,  EncryptionFile.encryptAndDecrypt(newFile.getName()));
             preparedStmt.setString (2, newFile.getType());
             preparedStmt.setString(3, newFile.getSize());
             preparedStmt.setBlob(4,newFile.getContext());

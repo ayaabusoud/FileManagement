@@ -7,7 +7,7 @@ import variables.Variables;
 
 import java.sql.Connection;
 
-public class Deletion implements IDeletion {
+public class Deletion implements IDeletionBehavior {
     public void delete(Connection connection){
         try {
             ClassificationChoice.chooseClassification(Variables.DELETE_FILES,connection);

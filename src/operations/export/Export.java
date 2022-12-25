@@ -2,14 +2,11 @@ package operations.export;
 
 import classification.ClassificationChoice;
 import exceptions.NotAllowedOperationException;
-import exceptions.SqlQueryException;
 import variables.Variables;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
-public class Export implements IExport {
+public class Export implements IExportBehavior {
 
     @Override
     public void export(Connection connection){

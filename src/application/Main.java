@@ -8,7 +8,7 @@ import authnetication.Login;
 import menu.AuthenticationMenu;
 import menu.NotIntegerInput;
 import menu.OperationMenu;
-import operations.operation.IOperation;
+import users.IUser;
 import authnetication.Signup;
 import variables.Variables;
 
@@ -25,7 +25,7 @@ public class Main {
         boolean displayMenu = true;
         boolean displayOperationMenu = true;
         int userMenuChoice;
-        IOperation functionality = null;
+        IUser functionality = null;
         int authChoice = 0;
         IAuthentication authUser = null;
 
@@ -69,9 +69,9 @@ public class Main {
         }while (displayMenu);
 
         do {
-            if(Variables.AdminUser){
+            if(Variables.adminUser){
                 OperationMenu.adminMenu();
-            }else if(Variables.StaffUser){
+            }else if(Variables.staffUser){
                 OperationMenu.staffMenu();
             }else if(Variables.readerUser) {
                 OperationMenu.readerMenu();

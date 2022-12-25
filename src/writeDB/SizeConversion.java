@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public abstract class SizeConversion {
-    public static String CSize(InputStream inputStream) throws FileSizeException {
+    public static String convertSize(InputStream inputStream) throws FileSizeException {
         String Size = null ;
         try{
             if(inputStream.available() < 50){

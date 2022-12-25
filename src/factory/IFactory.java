@@ -1,8 +1,8 @@
 package factory;
 
-import operations.operation.Operation;
+import users.User;
 import users.UserTypes;
 
 public interface IFactory {
-      Operation createUserFunctionality(UserTypes type);
+      public User create(UserTypes type);
 }

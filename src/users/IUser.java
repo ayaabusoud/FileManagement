@@ -1,10 +1,10 @@
-package operations.operation;
+package users;
 
 
 import java.sql.Connection;
 
 
-public interface IOperation {
+public interface IUser {
 
     public void importFiles(Connection connection);
     public void deleteFiles(Connection connection);

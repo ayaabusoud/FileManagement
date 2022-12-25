@@ -1,23 +1,22 @@
 package writeDB;
 
 import encryption.HashedPassword;
-import encryption.IEncrAndDecrption;
+import encryption.IEncryptionAndDecryption;
 import exceptions.SqlQueryException;
-import users.User;
+import users.UserInformation;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public abstract class UserAddition {
-    public static void addNewUser(Connection connection, User newReader) throws SqlQueryException {
+    public static void addNewUser(Connection connection, UserInformation newReader) throws SqlQueryException {
         String query = "INSERT INTO user (name,password) values (?,?)";
-        IEncrAndDecrption HashedPassword = new HashedPassword() ;
+        IEncryptionAndDecryption HashedPassword = new HashedPassword() ;
         try {
             PreparedStatement preparedStmt = connection.prepareStatement(query);
             preparedStmt.setString (1,  newReader.getName());
-            preparedStmt.setString (2, HashedPassword.IncAndDec(newReader.getPassword()));
+            preparedStmt.setString (2, HashedPassword.encryptAndDecrypt(newReader.getPassword()));
             preparedStmt.execute();
             System.out.println("successfully added");
         }

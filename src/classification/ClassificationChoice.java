@@ -1,6 +1,6 @@
 package classification;
 import encryption.EncryptionFile;
-import encryption.IEncrAndDecrption;
+import encryption.IEncryptionAndDecryption;
 import exceptions.NotAllowedOperationException;
 import exceptions.SqlQueryException;
 import readDB.ClassificationContent;
@@ -31,8 +31,8 @@ public abstract class ClassificationChoice{
             System.out.print("Enter the value: ");
             fileAttribute[1] = sc.next();
                 if(fileAttribute[0].equals("name")){
-                    IEncrAndDecrption EncryptionFile = new EncryptionFile();
-                    fileAttribute[1] = EncryptionFile.IncAndDec(fileAttribute[1]);
+                    IEncryptionAndDecryption EncryptionFile = new EncryptionFile();
+                    fileAttribute[1] = EncryptionFile.encryptAndDecrypt(fileAttribute[1]);
                 }
                 ClassificationController.controlClassification(connection,fileAttribute,type,Variables.BY_ATTRIBUTES);
         }

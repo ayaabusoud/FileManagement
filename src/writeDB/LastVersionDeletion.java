@@ -1,7 +1,7 @@
 package writeDB;
 
 import encryption.EncryptionFile;
-import encryption.IEncrAndDecrption;
+import encryption.IEncryptionAndDecryption;
 import exceptions.SqlQueryException;
 import file.FileInformation;
 
@@ -14,10 +14,10 @@ public abstract class LastVersionDeletion {
 
     public static void deleteFile(Connection connection, FileInformation file) throws SqlQueryException {
         PreparedStatement preparedStmt = null;
-        IEncrAndDecrption EncryptionFile = new EncryptionFile();
+        IEncryptionAndDecryption EncryptionFile = new EncryptionFile();
         try {
             preparedStmt = connection.prepareStatement(QUERY);
-            preparedStmt.setString(1, EncryptionFile.IncAndDec(file.getName()));
+            preparedStmt.setString(1, EncryptionFile.encryptAndDecrypt(file.getName()));
             preparedStmt.setString(2, file.getType());
             preparedStmt.execute();
         } catch (SQLException e) {

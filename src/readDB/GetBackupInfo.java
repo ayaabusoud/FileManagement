@@ -1,7 +1,7 @@
 package readDB;
 
 import encryption.EncryptionFile;
-import encryption.IEncrAndDecrption;
+import encryption.IEncryptionAndDecryption;
 import exceptions.SqlQueryException;
 import file.FileInformation;
 
@@ -16,11 +16,11 @@ import java.sql.SQLException;
 
         public static FileInformation getInfo(Connection connection, FileInformation file) throws SqlQueryException {
             PreparedStatement preparedStmt = null;
-            IEncrAndDecrption EncryptionFile = new EncryptionFile();
+            IEncryptionAndDecryption EncryptionFile = new EncryptionFile();
             ResultSet result;
             try {
                 preparedStmt = connection.prepareStatement(QUERY);
-                preparedStmt.setString(1, EncryptionFile.IncAndDec(file.getName()));
+                preparedStmt.setString(1, EncryptionFile.encryptAndDecrypt(file.getName()));
                 preparedStmt.setString(2, file.getType());
                 preparedStmt.setInt(3, file.getVersion() - 1);
                 result = preparedStmt.executeQuery();

@@ -6,7 +6,7 @@ import variables.Variables;
 
 import java.sql.Connection;
 
-public class Reading implements IReading {
+public class Reading implements IReadingBehavior {
     @Override
     public void read(Connection connection) {
         try {

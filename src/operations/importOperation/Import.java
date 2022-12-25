@@ -15,7 +15,7 @@ import java.io.*;
 import java.sql.Connection;
 import java.util.Scanner;
 
-public class Import implements IImport {
+public class Import implements IImportBehavior {
 
     @Override
     public void importFile(Connection connection) throws IncorrectFilePathException {
@@ -38,17 +38,17 @@ public class Import implements IImport {
         FileInformation newFile = FileNameAndType.splitNameAndType(filePath);
 
         try {
-            if (!FileExistences.isExist(connection, Variables.FILE_TABLE, newFile)) {
+            if (!FileExistences.isExist(connection, newFile)) {
                 FileAddition.addNewFile(connection,Variables.FILE_TABLE,inputStream, newFile);
             }
             else {
-                if(Variables.AdminUser)
+                if(Variables.adminUser)
                 {
                     System.out.print("Do you want to disable the default version? (yes/no) ");
                     String defaultVersion = sc.next();
-                    if(defaultVersion.equalsIgnoreCase("no")){
+                    if(defaultVersion.equalsIgnoreCase(Variables.DEFAULT)){
                         DefaultVersion.addDefaultVersion(connection,Variables.FILE_TABLE,inputStream,newFile);
-                    }else if(defaultVersion.equalsIgnoreCase("yes")) {
+                    }else if(defaultVersion.equalsIgnoreCase(Variables.NOT_DEFAULT)) {
                         OverwriteVersion.addOverwriteFile(connection,inputStream, newFile);
                     }
                 }

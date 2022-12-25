@@ -4,7 +4,7 @@ import exceptions.SqlQueryException;
 import file.FileInformation;
 import file.FileNameAndType;
 import readDB.GetBackupInfo;
-import readDB.GetFileInfo;
+import readDB.FileInfo;
 import readDB.PreviousFileExistence;
 import variables.Variables;
 import writeDB.FileAddition;
@@ -14,14 +14,14 @@ import writeDB.UpdateLastVersion;
 import java.sql.Connection;
 import java.util.Scanner;
 
-public class Rollback implements IRollback {
+public class Rollback implements IRollbackBehavior {
         public void rollbackVersion(Connection connection){
             Scanner sc = new Scanner(System.in);
             System.out.print("Enter file.type: ");
             String fileNameAndType = sc.next();
             FileInformation file = null;
             try {
-                file = GetFileInfo.getInfo(connection, FileNameAndType.splitNameAndType(fileNameAndType));
+                file = FileInfo.getInfo(connection, FileNameAndType.splitNameAndType(fileNameAndType));
 
             if (file.getVersionType() == Variables.ONE_VERSION_TYPE) {
                 LastVersionDeletion.deleteFile(connection, file );
