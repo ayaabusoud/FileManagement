@@ -1,6 +1,9 @@
 package readDB;
 
+import application.Main;
 import exceptions.FileIsAlreadyExist;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import variables.Variables;
 
 import java.io.*;
@@ -11,9 +14,11 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public abstract class Exports {
+
+    private static final Logger logger = LogManager.getLogger(Exports.class);
     public static void exportFiles(Connection connection, String[]fileAttribute
             ,String exportType) throws SQLException {
-
+        logger.debug("Enter to exportFiles with args => " + connection +fileAttribute +exportType);
         Scanner sc = new Scanner(System.in);
         ResultSet result =null;
 
@@ -22,7 +27,6 @@ public abstract class Exports {
         }else {
             result = FilesAttributesMatching.getFiles(connection,fileAttribute);
         }
-
         System.out.println("Enter folder name: ");
         String folderPath = sc.next();
         File newFolder = new File("/"+folderPath);
@@ -39,6 +43,8 @@ public abstract class Exports {
         statement.setString(2,result.getString("type") );
         statement.setInt(3,Variables.LAST_VERSION);
         statement.executeQuery() ;
+        logger.info("Query executed ");
+        logger.debug("Exit to Exports");
 
     }
     }catch(SQLException e){

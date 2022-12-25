@@ -16,12 +16,16 @@ import variables.Variables;
 
 import java.sql.Connection;
 import java.util.Scanner;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 
 
 
 public class Main {
     private static final Logger logger = LogManager.getLogger(Main.class);
     public static void main(String[] args){
+
         IDatabase sqlDatabase = SqlDatabase.createInstance();
         Connection connection = null;
         Scanner sc = new Scanner(System.in);
@@ -72,7 +76,7 @@ public class Main {
 
         do {
             if(Variables.adminUser){
-                OperationMenu.adminMenu();
+                OperationMenu. adminMenu();
             }else if(Variables.staffUser){
                 OperationMenu.staffMenu();
             }else if(Variables.readerUser) {
