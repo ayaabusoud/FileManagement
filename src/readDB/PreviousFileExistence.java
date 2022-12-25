@@ -4,13 +4,19 @@ import encryption.EncryptionFile;
 import encryption.IEncryptionAndDecryption;
 import exceptions.SqlQueryException;
 import file.FileInformation;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public abstract class PreviousFileExistence {
+    private static final Logger logger = LogManager.getLogger(PreviousFileExistence.class);
+
     public static boolean isExists(Connection connection, FileInformation file) throws SqlQueryException {
+        logger.debug("Enter to isExist with args => "+ connection + file);
         String query = "SELECT name FROM file WHERE name = ? and type = ? and version = ?";
         IEncryptionAndDecryption EncryptionFile = new EncryptionFile();
         ResultSet result;
@@ -20,6 +26,8 @@ public abstract class PreviousFileExistence {
             preparedStmt.setString(2, file.getType());
             preparedStmt.setInt(3, file.getVersion() - 1);
             result = preparedStmt.executeQuery();
+            logger.info("Query executed ");
+            logger.debug("PreviousFileExistence Exited");
             if (result.next()) {
                 return true;
             }
