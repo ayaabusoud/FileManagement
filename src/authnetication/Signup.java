@@ -30,13 +30,10 @@ public class Signup implements IAuthentication{
         System.out.print("Enter username: ");
         username = sc.next();
         logger.debug("User Enter his name" + username);
-        logger.debug("Check if the name is exists in Data base");
         if(ExistenceChecking.isExists(connection, Variables.USER_TABLE,username)){
            System.out.println("The username is exists, please choose another one: ");
-            logger.debug("the name is exists in Data base");
         }else {
             usernameIsValid = true;
-            logger.debug("the name is exists in Data base");
         }
         }
         System.out.print("Enter you password: ");
@@ -54,3 +51,4 @@ public class Signup implements IAuthentication{
     }
 
 }
+

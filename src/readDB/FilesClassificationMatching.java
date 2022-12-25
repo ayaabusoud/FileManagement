@@ -40,7 +40,8 @@ public abstract class FilesClassificationMatching {
             preparedStmt.setString(2, context[1]);
             preparedStmt.setString(3, context[2]);
             result = preparedStmt.executeQuery();
-            logger.info("Query executed");
+            logger.debug("select file query executed for files of name:" +context[0]
+                    +", type: "+context[1]+", size: "+context[2]);
             logger.debug("FilesClassificationMatching Exited");
 
         } catch (SQLException e) {

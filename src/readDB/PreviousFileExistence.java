@@ -16,7 +16,7 @@ public abstract class PreviousFileExistence {
     private static final Logger logger = LogManager.getLogger(PreviousFileExistence.class);
 
     public static boolean isExists(Connection connection, FileInformation file) throws SqlQueryException {
-        logger.debug("Enter to isExist with args => "+ connection + file);
+        logger.debug("Enter to isExist function");
         String query = "SELECT name FROM file WHERE name = ? and type = ? and version = ?";
         IEncryptionAndDecryption EncryptionFile = new EncryptionFile();
         ResultSet result;
@@ -26,7 +26,8 @@ public abstract class PreviousFileExistence {
             preparedStmt.setString(2, file.getType());
             preparedStmt.setInt(3, file.getVersion() - 1);
             result = preparedStmt.executeQuery();
-            logger.info("Query executed ");
+            logger.debug("getInfo file query executed for version: "+(file.getVersion() - 1)
+                    +"of "+file.getName()+"."+file.getType());
             logger.debug("PreviousFileExistence Exited");
             if (result.next()) {
                 return true;

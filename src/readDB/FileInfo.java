@@ -15,7 +15,7 @@ public abstract class FileInfo {
     private final static String QUERY = "SELECT * FROM file WHERE name = ? AND type = ? AND lastVersion = 1";
 
     public static FileInformation getInfo(Connection connection, FileInformation file) throws SqlQueryException {
-        logger.debug("Enter into FileInformation with args => "+connection + file );
+        logger.debug("Enter into FileInformation function" );
         IEncryptionAndDecryption EncryptionFile = new EncryptionFile();
         ResultSet result;
         try {
@@ -23,7 +23,8 @@ public abstract class FileInfo {
             preparedStmt.setString(1, EncryptionFile.encryptAndDecrypt(file.getName()));
             preparedStmt.setString(2, file.getType());
             result = preparedStmt.executeQuery();
-            logger.info("Query executed");
+            logger.debug("getInfo file query executed for last version of "
+                    +file.getName()+"."+file.getType());
             logger.debug("Exit to FileInfo");
             return InfoAboutFile.getInfo(file,result);
         } catch (SQLException e) {

@@ -1,6 +1,5 @@
 package versionControl;
 
-import application.Main;
 import exceptions.FileSizeException;
 import exceptions.SqlQueryException;
 import file.FileInformation;
@@ -9,9 +8,8 @@ import org.apache.log4j.Logger;
 import readDB.FileInfo;
 import variables.Variables;
 import writeDB.FileAddition;
-import writeDB.LastVersionUpdation;
+import writeDB.ZeroLastVersion;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 
@@ -20,12 +18,12 @@ public abstract class DefaultVersion {
 
     public static void addDefaultVersion(Connection connection, String tableName
             , InputStream inputStream, FileInformation newFile)  {
-        logger.debug("Enter to addDefaultVersion with args => " + connection + tableName + inputStream + newFile);
+        logger.debug("Enter to addDefaultVersion function");
         try {
             FileInformation previousFile = FileInfo.getInfo(connection, newFile);
             newFile.setVersion(previousFile.getVersion() + 1);
             newFile.setVersionType(Variables.DEFAULT_VERSION_CONTROL_TYPE);
-            LastVersionUpdation.updateToZero(connection, tableName, previousFile);
+            ZeroLastVersion.updateToZero(connection, tableName, previousFile);
             FileAddition.addNewFile(connection, tableName, inputStream, newFile);
         } catch (SqlQueryException e) {
             System.err.println(e.getMessage());

@@ -1,18 +1,16 @@
 package operations.rollback;
 
+import exceptions.IncorrectFileException;
 import exceptions.SqlQueryException;
 import file.FileInformation;
 import file.FileNameAndType;
-import operations.createClassification.ClassificationCreation;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import readDB.BackupInfo;
 import readDB.FileInfo;
 import readDB.PreviousFileExistence;
 import variables.Variables;
-import writeDB.FileAddition;
-import writeDB.LastVersionDeletion;
-import writeDB.LastVersionUpdation;
+import writeDB.*;
 
 import java.sql.Connection;
 import java.util.Scanner;
@@ -34,21 +32,24 @@ public class Rollback implements IRollbackBehavior {
             }
             else if (file.getVersionType() == Variables.DEFAULT_VERSION_CONTROL_TYPE) {
                 LastVersionDeletion.deleteFile(connection, file);
-                LastVersionUpdation.updateToOne(connection, Variables.FILE_TABLE, file);
+                OneLastVersion.updateToOne(connection, Variables.FILE_TABLE, file);
             }
             else if (file.getVersionType() == Variables.OVERWRITE_VERSION_CONTROL_TYPE) {
                 FileInformation backupFile = BackupInfo.getInfo(connection, file);
-                LastVersionDeletion.deleteFile(connection, backupFile );
+                BackupDeletion.deleteFile(connection, backupFile );
                 LastVersionDeletion.deleteFile(connection, file );
                 if (PreviousFileExistence.isExists(connection, backupFile)) {
                     backupFile.setVersionType(Variables.DEFAULT_VERSION_CONTROL_TYPE);
                 }
                 backupFile.setLastVersion(Variables.LAST_VERSION);
-                FileAddition.addNewFile(connection, Variables.FILE_TABLE, backupFile);
+                BackupFileAddition.addNewFile(connection, Variables.FILE_TABLE, backupFile);
             }
             } catch (SqlQueryException e) {
                 System.err.println(e.getMessage());
+            }catch (IncorrectFileException e){
+                System.err.println(e.getMessage());
             }
+            System.out.println("Successfully rolled back");
             logger.debug("exit rollbackVersion function");
     }
     }

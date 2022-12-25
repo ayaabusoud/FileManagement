@@ -18,7 +18,7 @@ public abstract class ClassificationChoice{
 
     public static void chooseClassification(String type, Connection connection) throws NotAllowedOperationException{
 
-        logger.debug("Enter to ClassificationChoice with following args => type "+type +"Connection: "+ connection );
+        logger.debug("Enter to ClassificationChoice for "+type +" operation");
 
         System.out.println("According to: ");
         System.out.println("Name");
@@ -31,12 +31,13 @@ public abstract class ClassificationChoice{
         System.out.print("enter your choice: ");
         String choice = sc.next() ;
         String fileAttribute[] = new String[3];
+
             if(choice.equalsIgnoreCase(Variables.FILE_NAME) || choice.equalsIgnoreCase(Variables.FILE_TYPE)
                     || choice.equalsIgnoreCase(Variables.FILE_SIZE)){
             fileAttribute[0] = choice.toLowerCase();
             System.out.print("Enter the value: ");
             fileAttribute[1] = sc.next();
-                if(fileAttribute[0].equals("name")){
+                if(fileAttribute[0].equalsIgnoreCase("name")){
                     IEncryptionAndDecryption EncryptionFile = new EncryptionFile();
                     fileAttribute[1] = EncryptionFile.encryptAndDecrypt(fileAttribute[1]);
                 }
@@ -52,7 +53,6 @@ public abstract class ClassificationChoice{
                 ClassificationController.controlClassification(connection,fileAttribute, type,Variables.BY_CLASSIFICATION);
         }
         }catch (SqlQueryException e) {
-            logger.error("Failed create classification");
             System.err.println(e.getMessage());
         }
         logger.debug("Exist from ClassificationChoice");

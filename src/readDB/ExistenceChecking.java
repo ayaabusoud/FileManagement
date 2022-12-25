@@ -13,13 +13,13 @@ public abstract class ExistenceChecking {
     private static final Logger logger = LogManager.getLogger(ExistenceChecking.class);
 
     public static boolean isExists(Connection connection,String table, String username) throws SqlQueryException {
-        logger.debug("Enter to isExists with args => "+ connection + "Table name"+ table +"User name"+ username);
+        logger.debug("Enter to isExists function");
         try {
             String query = "SELECT * FROM "+table+" WHERE name = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, username);
             ResultSet result = preparedStatement.executeQuery();
-            logger.info("Query executed");
+            logger.debug("check user existence select query executed for: "+username);
             if(result.next()){
                 return true;
             }

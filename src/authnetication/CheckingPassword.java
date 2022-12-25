@@ -8,16 +8,14 @@ public abstract class CheckingPassword {
     private static final Logger logger = LogManager.getLogger(Login.class);
 
     public static boolean checkUserPassword(String plainPassword, String hashedPassword) {
-        logger.debug(" Call the checkUserPassword function");
+        logger.debug("Call the checkUserPassword function");
 
         if (BCrypt.checkpw(plainPassword, hashedPassword)) {
-            logger.debug("Close the checkUserPassword function ");
-
+            logger.debug("the password is matching");
             return true;
         }
         else {
-            logger.debug("Close the checkUserPassword function ");
-
+            logger.debug("not matching");
             return false;
         }
     }

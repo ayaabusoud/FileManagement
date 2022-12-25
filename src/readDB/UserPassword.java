@@ -13,15 +13,15 @@ public abstract class UserPassword {
 
     private static final Logger logger = LogManager.getLogger(UserPassword.class);
     public static String getPassword(Connection connection, String username) throws SqlQueryException {
-        logger.debug("Enter to getPassword with args => "+ connection + username);
+        logger.debug("Enter to getPassword function");
         ResultSet result;
         try {
             String QUERY = "SELECT * FROM user WHERE name = ?";
             PreparedStatement preparedStmt = connection.prepareStatement(QUERY);
             preparedStmt.setString(1, username);
             result = preparedStmt.executeQuery();
-            logger.info("Query executed ");
-            logger.debug("UserPassword Exited");
+            logger.debug("get password query executed for user: "+username);
+                    logger.debug("UserPassword Exited");
             String hashedPassword = "";
             if (result.next()) {
                 hashedPassword = result.getString("password");

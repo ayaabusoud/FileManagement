@@ -13,13 +13,13 @@ public abstract class ClassificationsList {
     private static final Logger logger = LogManager.getLogger(ClassificationsList.class);
 
     public static void displayClassification(Connection connection) throws SqlQueryException {
-        logger.debug("Enter to displayClassification with args => " + connection);
+        logger.debug("Enter to displayClassification function");
        try
        {
            String query ="SELECT * FROM classification";
            PreparedStatement preparedStmt = connection.prepareStatement(query);
            ResultSet result = preparedStmt.executeQuery();
-           logger.info("Query executed");
+           logger.debug("get all classification query executed");
 
            while (result.next()){
                System.out.println(result.getString("name")+"    "

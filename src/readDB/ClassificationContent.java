@@ -13,20 +13,20 @@ import java.sql.SQLException;
 public abstract class ClassificationContent {
     private static final Logger logger = LogManager.getLogger(ClassificationContent.class);
 
-    public static String[] getContent(Connection connection, String className)throws SqlQueryException {
-        logger.debug("Enter to getContent with args => " +connection + "and "+className );
-        String []context = new String[2];
+    public static String[] getContent(Connection connection, String classificationName)throws SqlQueryException {
+        logger.debug("Enter to getContent function" );
+        String [] context = new String[2];
         String query ="SELECT * FROM classification WHERE name = ?";
         try
         {
             PreparedStatement preparedStmt = connection.prepareStatement(query);
-            preparedStmt.setString (1,  className);
+            preparedStmt.setString (1,  classificationName);
             ResultSet result = preparedStmt.executeQuery();
             logger.info("Query executed");
             if(result.next()){
                 context = result.getString("context").split(",");
             }
-            logger.debug("Exit to ClassificationContent");
+            logger.debug("get info content executed for classification: "+classificationName);
             return context;
         }
         catch (SQLException e) {
