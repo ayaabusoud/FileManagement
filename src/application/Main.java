@@ -8,6 +8,8 @@ import authnetication.Login;
 import menu.AuthenticationMenu;
 import menu.NotIntegerInput;
 import menu.OperationMenu;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import users.IUser;
 import authnetication.Signup;
 import variables.Variables;
@@ -16,8 +18,9 @@ import java.sql.Connection;
 import java.util.Scanner;
 
 
-public class Main {
 
+public class Main {
+    private static final Logger logger = LogManager.getLogger(Main.class);
     public static void main(String[] args){
         IDatabase sqlDatabase = SqlDatabase.createInstance();
         Connection connection = null;
@@ -28,7 +31,6 @@ public class Main {
         IUser functionality = null;
         int authChoice = 0;
         IAuthentication authUser = null;
-
         try {
              connection = sqlDatabase.connectDB();
         }catch (ConnectionMySqlException e){

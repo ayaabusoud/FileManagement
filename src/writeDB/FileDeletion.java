@@ -1,6 +1,8 @@
 package writeDB;
 
 import exceptions.SqlQueryException;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import readDB.FilesAttributesMatching;
 import readDB.FilesClassificationMatching;
 import variables.Variables;
@@ -11,8 +13,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public abstract class FileDeletion {
+    private static final Logger logger = LogManager.getLogger(FileDeletion.class);
     public static void deleteFile(Connection connection
             , String [] fileAttributes , String type) throws SqlQueryException {
+        logger.debug("enter deleteFile function");
         ResultSet result = null;
         try {
             if (type.equals(Variables.BY_CLASSIFICATION)) {
@@ -26,10 +30,10 @@ public abstract class FileDeletion {
                 preparedStmt.setString (1, result.getString("name"));
                 preparedStmt.setString (2,result.getString("type")  );
                 preparedStmt.execute();
-
             }
         } catch (SQLException e) {
             throw new SqlQueryException("Delete File Query Failed ");
         }
+        logger.debug("exit deleteFile function");
     }
 }
