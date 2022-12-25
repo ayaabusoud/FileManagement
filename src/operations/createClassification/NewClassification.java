@@ -2,6 +2,8 @@ package operations.createClassification;
 
 import exceptions.SqlQueryException;
 import menu.ClassificationMenu;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import readDB.ExistenceChecking;
 import variables.Variables;
 
@@ -9,9 +11,9 @@ import java.sql.Connection;
 import java.util.Scanner;
 
 public abstract class NewClassification {
-
-
+    private static final Logger logger = LogManager.getLogger(NewClassification.class);
     public static String[] createClassification(Connection connection) {
+        logger.debug("enter createClassification function");
         Scanner sc = new Scanner(System.in);
         boolean exit = true;
         int choice ;
@@ -25,6 +27,7 @@ public abstract class NewClassification {
         while (loop) {
             System.out.print("Enter the classification name: ");
             classificationAttributes[0] = sc.next();
+            logger.debug("new classification name: "+classificationAttributes[0]);
             try {
                 loop = ExistenceChecking.isExists(connection, Variables.CLASSIFICATION_TABLE, classificationAttributes[0]);
             }  catch (SqlQueryException e) {
@@ -65,7 +68,8 @@ public abstract class NewClassification {
         classificationAttributes[1] =  fileName +","+fileType+","+fileSize;
         classificationAttributes[2] = "Files name: "+fileName+ ", Files Type: "+fileType+ ", Files Size: "+fileSize;
 
-
+        logger.debug("classification according to:"+classificationAttributes[1]);
+        logger.debug("exist create function");
         return classificationAttributes;
     }
 }

@@ -4,14 +4,18 @@ import encryption.EncryptionFile;
 import encryption.IEncryptionAndDecryption;
 import exceptions.SqlQueryException;
 import file.FileInformation;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public abstract class LastVersionUpdation {
-
-    public static void updateToZero(Connection connection,String tableName, FileInformation newFile) throws SqlQueryException {
+    private static final Logger logger = LogManager.getLogger(LastVersionUpdation.class);
+    public static void updateToZero(Connection connection,String tableName
+            , FileInformation newFile) throws SqlQueryException {
+        logger.debug("enter updateToZero function");
         String QUERY ="Update "+ tableName +" SET lastVersion = 0 WHERE name = ? AND type = ?";
         IEncryptionAndDecryption EncryptionFile = new EncryptionFile();
         try {
@@ -19,11 +23,15 @@ public abstract class LastVersionUpdation {
             preparedStmt.setString(1, EncryptionFile.encryptAndDecrypt(newFile.getName()));
             preparedStmt.setString(2, newFile.getType());
             int result = preparedStmt.executeUpdate();
-            } catch (SQLException e) {
+            logger.debug("update "+newFile.getName()+"."+newFile.getType()+" last version to zero");
+        } catch (SQLException e) {
                 throw new SqlQueryException("Update Latest Version To Zero Query Failed");
             }
+        logger.debug("exit updateToZero function");
     }
-    public static void updateToOne(Connection connection,String tableName, FileInformation newFile) throws SqlQueryException {
+    public static void updateToOne(Connection connection,String tableName
+            , FileInformation newFile) throws SqlQueryException {
+        logger.debug("enter updateToOne function");
         IEncryptionAndDecryption EncryptionFile = new EncryptionFile();
         try {
             String QUERY ="Update "+tableName +"SET lastVersion = 1 WHERE name = ? AND type = ? AND version = ?";
@@ -32,9 +40,13 @@ public abstract class LastVersionUpdation {
             preparedStmt.setString(2, newFile.getType());
             preparedStmt.setInt(3, newFile.getVersion()-1);
             int result = preparedStmt.executeUpdate();
-           } catch (SQLException e) {
+            logger.debug("update "+newFile.getName()+"."+newFile.getType()+"version: "
+                    + (newFile.getVersion() - 1)+" last version to zero");
+        } catch (SQLException e) {
             throw new SqlQueryException("Update Latest Version To One Query Failed");
-        }
+           }
+        logger.debug("exit updateToOne function");
+
 
 
     }
