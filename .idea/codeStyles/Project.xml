@@ -1,6 +1,17 @@
 <component name="ProjectCodeStyleConfiguration">
   <code_scheme name="Project" version="173">
     <ScalaCodeStyleSettings>
+      <option name="alwaysUsedImports">
+        <array>
+          <option value="com.mongodb.spark.config._" />
+          <option value="org.apache.spark.feature.VectorAssembler" />
+          <option value="org.apache.spark.ml.evaluation.RegressionEvaluator" />
+          <option value="org.apache.spark.ml.recommendation.ALS" />
+          <option value="org.apache.spark.spark" />
+          <option value="org.json4s.native.Serialization.write" />
+          <option value="org.mongodb.scala._" />
+        </array>
+      </option>
       <option name="MULTILINE_STRING_CLOSING_QUOTES_ON_NEW_LINE" value="true" />
     </ScalaCodeStyleSettings>
   </code_scheme>

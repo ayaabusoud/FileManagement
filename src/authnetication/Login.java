@@ -1,13 +1,10 @@
 package authnetication;
 
-import application.Main;
 import exceptions.NotIntegerException;
 import factory.OperationFactory;
 import factory.IFactory;
 import menu.AuthenticationMenu;
 import menu.NotIntegerInput;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 import users.IUser;
 import users.UserTypes;
 
@@ -17,7 +14,6 @@ import java.util.Scanner;
 import static variables.Variables.*;
 
 public class Login implements IAuthentication{
-    private static final Logger logger = LogManager.getLogger(Login.class);
 
     private static final int ADMIN_KEY = 111;
     private static final int STAFF_KEY = 123;
@@ -32,7 +28,6 @@ public class Login implements IAuthentication{
         do {
             try {
                 userType = NotIntegerInput.scanInteger(userType);
-
             }catch (NotIntegerException e){
                 userTypeLoop = true;
                 System.err.println(e.getMessage());

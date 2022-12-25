@@ -3,6 +3,8 @@ package authnetication;
 import exceptions.SqlQueryException;
 import factory.OperationFactory;
 import factory.IFactory;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import users.IUser;
 import readDB.ExistenceChecking;
 import users.UserInformation;
@@ -14,7 +16,9 @@ import java.sql.Connection;
 import java.util.Scanner;
 
 public class Signup implements IAuthentication{
+    private static final Logger logger = LogManager.getLogger(Signup.class);
     public IUser authUser(Connection connection) {
+        logger.debug(" Call the authUser function in class Signup");
         IFactory factory = new OperationFactory();
         UserInformation reader = new UserInformation();
         String username="";
@@ -25,14 +29,19 @@ public class Signup implements IAuthentication{
         while (!usernameIsValid){
         System.out.print("Enter username: ");
         username = sc.next();
+        logger.debug("User Enter his name" + username);
+        logger.debug("Check if the name is exists in Data base");
         if(ExistenceChecking.isExists(connection, Variables.USER_TABLE,username)){
-            System.out.println("The username is exists, please choose another one: ");
+           System.out.println("The username is exists, please choose another one: ");
+            logger.debug("the name is exists in Data base");
         }else {
             usernameIsValid = true;
+            logger.debug("the name is exists in Data base");
         }
         }
         System.out.print("Enter you password: ");
         password = sc.next();
+        logger.debug("User Enter his password");
         reader.setName(username);
         reader.setPassword(password);
         UserAddition.addNewUser(connection,reader);
@@ -40,6 +49,7 @@ public class Signup implements IAuthentication{
         } catch (SqlQueryException e) {
         System.out.println(e.getMessage());
         }
+        logger.debug("Close the authUser function in Signup");
         return  factory.create(UserTypes.Reader);
     }
 
