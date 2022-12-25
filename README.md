@@ -1,6 +1,7 @@
 # FileManagement Report
 This is a report containing all the achieved functionalities as written in the requirements SRS along with the used design patterns. Each section contains the description of each feature, and what was done in order to achieve that.
 
+click on the image link then download:  
 <img src="ClassDiagram.pdf" alt="diagram" title="">
 
 ## 1.Design Patterns
@@ -15,7 +16,7 @@ We use it in the SqlDatabase as the connection is done once at the starter of th
 We used it to create objects in the User class of the allowed operation according to the user type.
 
 
-## 2.Functionalities: 
+## 2.Functional Requirements: 
 ### Signup
 We start our program such that the reader will sign up if they don't have an account. Where the user enters a unique username and a password then if there is no conflict the user will be added to our system as a new record in the user table successfully then the reader home page will appear.
 
@@ -40,13 +41,20 @@ Admin and staff can create classification that use in (read , delete , export ).
 ### Read
 All users can read files, by file name, file type, size or custom category, based on the user's choice the files’ name and content will display in the screen if it exists.
 
-## 3.Exceptions
+## 2.Non-Functional Requirements: 
 
-### ConnectionMySqlException
-### FileIsAlreadyExist
-### FileSizeException
-### IncorrectFilePathException
-### NotAllowedOperationException
-### NotIntegerException
-### SqlQueryException
+### User Authentication
+   Each user needs to login before entering the system so that admin and staff need to enter the correct key and readers need to enter their username and password to get access to the system and request queries.
+### Authorization
+   According to the login user type, we create objects in OperationFactory and then display a menu of the allowed operations to that type of user so if he chooses a not allowed operation an error message will appear and it won’t be executed.
 
+### Security
+   Before inserting the file to the file table in the database we encrypt the file name ( Java -> Java_ ), also in the signup processes before inserting the password in the user table we hash the password first.
+
+### Availability 
+   We handled the exceptions with user-defined ones, so that if the user enters a string instead of integer, an incorrect path when importing a file, or choose to export a file in specific folder and there is already a file with the same name and path in it or chooses an unallowed operation or there is a failure in the query the system won’t shutdown and only an error message will appear. But if the connection to the database fails, the system will shut down because all the system depends on it.
+   Our exceptions :
+   NotIntegerException, SqlQueryException, NotAllowedOperationException, IncorrectFilePathException, FileSizeException, FileIsAlreadyExist, ConnectionMySqlException
+
+### Scalable
+   We give each component a single, clearly defined purpose, so we route the incoming requests to different components according to its type. This makes sure that no single component becomes the point of all the traffic and so the workload is distributed uniformly.
