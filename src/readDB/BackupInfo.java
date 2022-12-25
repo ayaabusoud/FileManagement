@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-    public abstract class GetBackupInfo {
+    public abstract class BackupInfo {
         private final static String QUERY = "SELECT * FROM backup WHERE name = ? AND type = ? AND version = ?";
 
         public static FileInformation getInfo(Connection connection, FileInformation file) throws SqlQueryException {

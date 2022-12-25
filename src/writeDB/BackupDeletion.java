@@ -21,7 +21,6 @@ public abstract class BackupDeletion {
             preparedStmt.setString(2, file.getType());
             preparedStmt.setInt(3, file.getVersion());
             preparedStmt.execute();
-            System.out.println("AAAAAAA");
         } catch (SQLException e) {
             throw new SqlQueryException("Delete Backup Query Failed");
         }

@@ -1,5 +1,7 @@
 # FileManagement Report
-This is a report containing all the achieved functionalities as written in the requirements pdf along with the used design patterns (Factory, Singleton). Each section contains the description of each feature, and what was done in order to achieve that.
+This is a report containing all the achieved functionalities as written in the requirements SRS along with the used design patterns. Each section contains the description of each feature, and what was done in order to achieve that.
+
+<img src="ClassDiagram.pdf" alt="diagram" title="">
 
 ## 1.Design Patterns
 

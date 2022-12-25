@@ -3,6 +3,7 @@ package writeDB;
 import encryption.EncryptionFile;
 import encryption.IEncryptionAndDecryption;
 import exceptions.FileSizeException;
+import exceptions.SqlQueryException;
 import file.FileInformation;
 
 import java.io.InputStream;
@@ -12,8 +13,7 @@ import java.sql.SQLException;
 
 public abstract class OverwriteFile {
     public static void updateFile(Connection connection, InputStream inputStream, FileInformation newFile) throws SQLException {
-        String query ="Update file SET size = ? And context = ? AND version = ? " +
-                "And versionType = ? WHERE name = ? AND type = ? And lastVersion = ?";
+        String query ="Update file SET size = ?, context = ?,version = ?, versionType = ? WHERE name = ? AND type = ? And lastVersion = ?";
         IEncryptionAndDecryption EncryptionFile = new EncryptionFile();
         try {
             String Size= SizeConversion.convertSize(inputStream) ;
@@ -26,11 +26,10 @@ public abstract class OverwriteFile {
             preparedStmt.setString (6, newFile.getType());
             preparedStmt.setInt(7, 1);
 
-//            preparedStmt.setInt(6, newFile.getLastVersion());
            ;
             int result = preparedStmt.executeUpdate();
-//        } catch (SQLException e) {
-//            throw new SqlQueryException("Overwrite Query Failed");
+        } catch (SQLException e) {
+            throw new SqlQueryException("Overwrite Query Failed");
         }
         catch (FileSizeException e) {
             System.err.println(e.getMessage());

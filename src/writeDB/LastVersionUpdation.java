@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public abstract class UpdateLastVersion {
+public abstract class LastVersionUpdation {
 
     public static void updateToZero(Connection connection,String tableName, FileInformation newFile) throws SqlQueryException {
         String QUERY ="Update "+ tableName +" SET lastVersion = 0 WHERE name = ? AND type = ?";

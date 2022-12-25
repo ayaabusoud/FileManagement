@@ -3,13 +3,13 @@ package operations.rollback;
 import exceptions.SqlQueryException;
 import file.FileInformation;
 import file.FileNameAndType;
-import readDB.GetBackupInfo;
+import readDB.BackupInfo;
 import readDB.FileInfo;
 import readDB.PreviousFileExistence;
 import variables.Variables;
 import writeDB.FileAddition;
 import writeDB.LastVersionDeletion;
-import writeDB.UpdateLastVersion;
+import writeDB.LastVersionUpdation;
 
 import java.sql.Connection;
 import java.util.Scanner;
@@ -28,10 +28,10 @@ public class Rollback implements IRollbackBehavior {
             }
             else if (file.getVersionType() == Variables.DEFAULT_VERSION_CONTROL_TYPE) {
                 LastVersionDeletion.deleteFile(connection, file);
-                UpdateLastVersion.updateToOne(connection, Variables.FILE_TABLE, file);
+                LastVersionUpdation.updateToOne(connection, Variables.FILE_TABLE, file);
             }
             else if (file.getVersionType() == Variables.OVERWRITE_VERSION_CONTROL_TYPE) {
-                FileInformation backupFile = GetBackupInfo.getInfo(connection, file);
+                FileInformation backupFile = BackupInfo.getInfo(connection, file);
                 LastVersionDeletion.deleteFile(connection, backupFile );
                 LastVersionDeletion.deleteFile(connection, file );
                 if (PreviousFileExistence.isExists(connection, backupFile)) {
