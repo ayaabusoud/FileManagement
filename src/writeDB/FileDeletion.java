@@ -30,6 +30,11 @@ public abstract class FileDeletion {
                 preparedStmt.setString (1, result.getString("name"));
                 preparedStmt.setString (2,result.getString("type")  );
                 preparedStmt.execute();
+                String backupQuery ="DELETE FROM backup WHERE name = ? AND type = ? " ;
+                PreparedStatement preparedStatement = connection.prepareStatement(backupQuery);
+                preparedStatement.setString (1, result.getString("name"));
+                preparedStatement.setString (2,result.getString("type")  );
+                preparedStatement.execute();
             }
         } catch (SQLException e) {
             throw new SqlQueryException("Delete File Query Failed ");

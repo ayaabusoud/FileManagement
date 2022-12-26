@@ -37,9 +37,10 @@ public class SqlDatabase implements IDatabase {
                 connection = DriverManager.getConnection(URL,USERNAME,PASSWORD);
                 connectionStatus = true;
                 System.out.println("connected to DB");
-            }
-            catch (Exception e){
-            throw new ConnectionMySqlException("Not able to connect to the DB, try again later.");
+            }catch ( ClassNotFoundException e){
+                throw new ConnectionMySqlException("Not able to connect to the DB, try again later.");
+            }catch (SQLException e){
+                throw new ConnectionMySqlException("Not able to connect to the DB, try again later.");
             }
             logger.debug("exit connection function");
         }

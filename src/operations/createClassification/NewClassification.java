@@ -1,7 +1,9 @@
 package operations.createClassification;
 
+import exceptions.NotIntegerException;
 import exceptions.SqlQueryException;
 import menu.ClassificationMenu;
+import menu.NotIntegerInput;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import readDB.ExistenceChecking;
@@ -16,7 +18,7 @@ public abstract class NewClassification {
         logger.debug("enter createClassification function");
         Scanner sc = new Scanner(System.in);
         boolean exit = true;
-        int choice ;
+        int choice = 0;
         String fileName = "Any";
         String fileType = "Any";
         String fileSize = "Any";
@@ -44,7 +46,12 @@ public abstract class NewClassification {
         ClassificationMenu.doneMenu();
         do{
             System.out.print("Enter a choice number: ");
-            choice = sc.nextInt();
+            try {
+                choice = NotIntegerInput.scanInteger(choice);
+            }catch (NotIntegerException e){
+                System.err.println(e.getMessage());
+                continue;
+            }
 
             switch (choice){
                 case 1:

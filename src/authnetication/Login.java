@@ -60,6 +60,7 @@ public class Login implements IAuthentication{
                     break;
                 default:
                     System.out.print("invalid number, please re-enter: ");
+                    userTypeLoop = true;
             }
         }while (userTypeLoop);
         logger.debug("Close the authUser function");
